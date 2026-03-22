@@ -192,26 +192,17 @@ function About() {
                                 <path d="M80 350 L200 150 L320 350" stroke="#e8d5a8" strokeWidth="0.5" opacity="0.5" />
                                 <circle cx="200" cy="200" r="20" fill="#e8d5a8" opacity="0.4" />
                             </svg>
-                            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <img src="/Logo/CLA_Tanzania_logo_color.gif" alt="CLA Tanzania" style={{ width: '55%', objectFit: 'contain', filter: 'drop-shadow(0 8px 32px rgba(0,0,0,0.4))' }} />
+                            <div style={{ position: 'absolute', inset: 0 }}>
+                                <img src="/Images/First%20Class.jpeg" alt="CLA First Class" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
                             </div>
-                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 32 }}>
-                                <div className="glass" style={{ borderRadius: 16, padding: 24, color: '#fff' }}>
-                                    <div style={{ fontFamily: 'Playfair Display, serif', fontSize: 36, fontWeight: 700, background: 'linear-gradient(135deg, #e8d5a8, #c9a84c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: 8 }}>Mount Meru</div>
-                                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.6 }}>Our campus sits in the breathtaking foothills of Mount Meru, 30 minutes from the vibrant city of Arusha — the heart of East Africa.</p>
-                                </div>
-                            </div>
+
                         </div>
                         <div style={{ position: 'absolute', right: -24, top: 48, background: '#fff', borderRadius: 16, boxShadow: '0 20px 50px rgba(0,0,0,0.15)', padding: 20, maxWidth: 160 }}>
                             <div style={{ width: 40, height: 40, background: '#eef2ff', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>🎓</div>
                             <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#0d2b6e', fontSize: 18 }}>First Class</div>
                             <div style={{ color: '#9ca3af', fontSize: 12, marginTop: 4 }}>Graduated 2013</div>
                         </div>
-                        <div style={{ position: 'absolute', left: -24, bottom: 80, background: '#0d2b6e', borderRadius: 16, boxShadow: '0 20px 50px rgba(0,0,0,0.3)', padding: 20, maxWidth: 160 }}>
-                            <div style={{ width: 40, height: 40, background: 'rgba(232,213,168,0.2)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>🌍</div>
-                            <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#fff', fontSize: 18 }}>East Africa</div>
-                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, marginTop: 4 }}>Regional Leader</div>
-                        </div>
+
                     </div>
                     <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
                         <div>
@@ -335,7 +326,7 @@ function Programs() {
 function Testimonials() {
     const quotes = [
         { quote: "CLA didn't just give me an education — it gave me a mission. I now serve as a public health officer, giving back to the communities that shaped me.", name: 'Alex Peter Mathias', year: "Class of '25" },
-        { quote: "The teachers here don't just teach subjects. They teach you how to think, how to lead, and most importantly — how to serve.", name: 'Maijo William', year: "Class of '14" },
+        { quote: "The teachers here don't just teach subjects. They teach you how to think, how to lead, and most importantly — how to serve.", name: 'Sebastian Peter', year: "Class of '21" },
         { quote: "Growing up in a small village, I never imagined attending a school like this. CLA proved that where you come from doesn't define where you're going.", name: 'Dunstan Kulwa', year: "Class of '21" },
     ];
     const [active, setActive] = useState(0);
@@ -508,7 +499,7 @@ function Admissions() {
 
                         <div style={{ background: '#f0fdf4', borderRadius: 16, padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 10 }}>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#166534" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 15 19.79 19.79 0 0 1 1.57 6.46 2 2 0 0 1 3.54 4.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 11.8a16 16 0 0 0 4.29 4.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 19.8 17.48 2 2 0 0 1 22 16.92z" /></svg>
-                            <span style={{ fontSize: 13, color: '#166534', fontWeight: 600 }}>Enquiries: 0767 279 550 &nbsp;|&nbsp; 0620 301 954</span>
+                            <span style={{ fontSize: 13, color: '#166534', fontWeight: 600 }}>Enquiries: 0743720672 &nbsp;|&nbsp; 0620 301 954</span>
                         </div>
                     </div>
 
@@ -696,7 +687,7 @@ function Contact() {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                             {[
                                 ['📍', 'Location', 'Foothills of Mount Meru, Arusha, Tanzania'],
-                                ['✉️', 'Email', 'cstonetz1@gmail.com'],
+                                ['✉️', 'Email', 'headmaster@cornerstoneschooltanzania.ac.tz'],
                                 ['🏫', 'Network', 'Cornerstone Development Africa (CDA)'],
                             ].map(([icon, label, value]) => (
                                 <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>

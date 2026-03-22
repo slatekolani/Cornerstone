@@ -5,7 +5,10 @@ body { font-family: 'Inter', sans-serif; margin: 0; }
 
 /* Hero parallax bg */
 .hero-bg {
-  background: linear-gradient(135deg, #0d2b6e 0%, #1a4a9e 30%, #1e5cc5 60%, #0d2b6e 100%);
+  background-image: linear-gradient(135deg, rgba(13,43,110,0.72) 0%, rgba(26,74,158,0.62) 30%, rgba(30,92,197,0.58) 60%, rgba(13,43,110,0.72) 100%), url('/Images/CLA%20Photo.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
 }
