@@ -51,7 +51,7 @@ function Navbar() {
         return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize); };
     }, []);
 
-    const links = ['About', 'Programs', 'Admissions', 'Alumni', 'Contact'];
+    const links = ['About', 'Programs', 'Admissions', 'Results', 'Alumni', 'Contact'];
     const hasBg = scrolled || menuOpen;
     const close = () => setMenuOpen(false);
 
@@ -143,7 +143,7 @@ function Hero() {
                         Leaders
                     </h1>
                     <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 18, lineHeight: 1.7, maxWidth: 560, marginBottom: 40 }}>
-                        Nestled at the foothills of Mount Meru, CLA Tanzania transforms brilliant young minds from disadvantaged backgrounds into visionary leaders — fully on scholarship.
+                        Nestled at the foothills of Mount Meru, CLA Tanzania transforms brilliant young minds from into visionary leaders — fully on scholarship.
                     </p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
                         <a href="#admissions" className="btn-primary" style={{ background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)', color: '#0d2b6e', fontWeight: 700, padding: '16px 32px', borderRadius: 999, fontSize: 16, textDecoration: 'none', transition: 'all 0.3s', display: 'inline-block' }}
@@ -400,7 +400,7 @@ function Admissions() {
     const lastInterviewEnd = new Date('2026-03-28'); lastInterviewEnd.setHours(23, 59, 59, 999);
     const allDone = new Date() > lastInterviewEnd;
     // Set to true when first-round results are ready to publish
-    const resultsAvailable = false;
+    const resultsAvailable = true;
 
     const statusStyle = {
         completed: { bg: '#dcfce7', color: '#166534', label: 'Completed' },
@@ -432,7 +432,7 @@ function Admissions() {
                         A Scholarship That <span style={{ color: '#b8963c' }}>Changes Everything</span>
                     </h2>
                     <p style={{ color: '#4b5563', fontSize: 18, lineHeight: 1.7, maxWidth: 680, margin: '0 auto' }}>
-                        Each year, we award <strong>50 full scholarships</strong> — 25 boys and 25 girls — to the brightest Form 5–6 students from Tanzania's most disadvantaged communities.
+                        Each year, we award <strong>50 full scholarships</strong> — 25 boys and 25 girls — to the brightest Form 5–6 students from all over Tanzania.
                     </p>
                 </div>
 
@@ -576,6 +576,312 @@ function Admissions() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ─── Practical Interview Results 2026 ─── */
+const girlsData = [
+    { region: 'ARUSHA', students: [
+        { sn: 1,  name: 'LETICIA FULUSTAN MARANDU',   comb: 'PCB', score: 'BBC', div: 'I.14'   },
+        { sn: 2,  name: 'PEACE AFITWA PALLANGYO',      comb: 'PCM', score: 'CBB', div: 'I.12'   },
+        { sn: 3,  name: 'MERCIANA JOSEPH MZAVA',       comb: 'PCM', score: 'AAA', div: 'I.7'    },
+        { sn: 4,  name: 'RACHEL MSAFIRI SHAMI',        comb: 'PCB', score: 'CBC', div: 'I.11'   },
+        { sn: 5,  name: 'ELESIA MATOKEO SEGELE',       comb: 'HKL', score: 'CBC', div: 'III.24' },
+        { sn: 6,  name: 'ELIZABETH LOISHIYE LOISHIYE', comb: 'HGL', score: 'CCB', div: 'II.18'  },
+        { sn: 7,  name: 'MWAJUMA BAKARI JUMAA',        comb: 'HKL', score: 'ACA', div: 'I.17'   },
+        { sn: 8,  name: 'YUSTINA GILBART MITALAMI',    comb: 'HE',  score: 'AC',  div: 'I.15'   },
+        { sn: 9,  name: 'MOREEN LEONARD KWEKA',        comb: 'EGM', score: 'BA',  div: 'I.15'   },
+        { sn: 10, name: 'MARTHA EMMANUEL BOAZ',        comb: 'HGL', score: 'CCB', div: 'II.20'  },
+        { sn: 11, name: 'SOPHIA DIDAS MELEJI',         comb: 'HKL', score: 'CCD', div: 'II.25'  },
+        { sn: 12, name: 'MEDLINE ELIAS MOLLEL',        comb: 'HGL', score: 'CCC', div: 'III.22' },
+    ]},
+    { region: 'DODOMA', students: [
+        { sn: 1, name: 'JOANNA SALALA MALIMI',  comb: 'PCM', score: 'AAA', div: 'I.7' },
+        { sn: 2, name: 'MACKLINA MUSSA LUHAMO', comb: 'PCM', score: 'CAA', div: 'I.7' },
+    ]},
+    { region: 'LINDI', students: [
+        { sn: 1, name: 'CHRISTINA CLEMENT MAGIGE', comb: 'PCM', score: 'BAA', div: 'I.11' },
+    ]},
+    { region: 'NJOMBE', students: [
+        { sn: 1, name: 'JEMAIDA GERMANUS MNYIKA', comb: 'PCB', score: 'CCC', div: 'I.15'  },
+        { sn: 2, name: 'WINFRIDA PIUS NZIKU',      comb: 'HE',  score: 'CC',  div: 'II.18' },
+    ]},
+    { region: 'MBEYA', students: [
+        { sn: 1, name: 'ELIZABETH ARON NASENGA', comb: 'PCB', score: 'BAA', div: 'I.7' },
+    ]},
+    { region: 'KAGERA', students: [
+        { sn: 1, name: 'NAOMI WINCHISLAUS SYLVESTER', comb: 'PCB', score: 'CAB', div: 'I.8' },
+    ]},
+    { region: 'IRINGA', students: [
+        { sn: 1, name: 'JESCAR BILAL NGOGO',  comb: 'HGL', score: 'CCB', div: 'III.22' },
+        { sn: 2, name: 'NEEMA JULIUS NGULO',  comb: 'HKL', score: 'CBC', div: 'III.22' },
+    ]},
+    { region: 'ZANZIBAR', students: [
+        { sn: 1, name: 'DEVOTHA DEOGRATIUS MAO', comb: 'PCB', score: 'BAB', div: 'I.9' },
+    ]},
+    { region: 'MARA', students: [
+        { sn: 1, name: 'IVON LUCAS MANGÍRA', comb: 'HGL', score: 'BBC', div: 'II.19' },
+    ]},
+    { region: 'PWANI', students: [
+        { sn: 1, name: 'MEHREEN ABDUL MOHAMED',    comb: 'PCB', score: 'CBB', div: 'I.12' },
+        { sn: 2, name: 'LAURENCIA RICHARD KACHWELE', comb: 'EGM', score: 'BCC', div: 'I.14' },
+        { sn: 3, name: 'LAURA GODFREY MALONGO',    comb: 'HGL', score: 'CCB', div: 'I.16' },
+    ]},
+    { region: 'SHINYANGA', students: [
+        { sn: 1, name: 'BETTY MATHIAS PETER', comb: 'PCM', score: 'BBA', div: 'I.8' },
+    ]},
+    { region: 'MANYARA', students: [
+        { sn: 1, name: 'OLIMPIA LEONARD LAURENT', comb: 'HGL', score: 'BCC', div: 'III.22' },
+        { sn: 2, name: 'NASMA HARUNA KAJULA',      comb: 'HGL', score: 'BCC', div: 'III.22' },
+    ]},
+    { region: 'TANGA', students: [
+        { sn: 1, name: 'NEEMA ISHENGOMA MAFIE', comb: 'PCB', score: 'CCC', div: 'I.11'   },
+        { sn: 2, name: 'JUSLIN ISAACK SINION',   comb: 'HKL', score: 'DAC', div: 'III.23' },
+    ]},
+    { region: 'MTWARA', students: [
+        { sn: 1, name: 'BADRA SAME HAMIS',   comb: 'HG E', score: 'CB',  div: 'II.20' },
+        { sn: 2, name: 'SARA RAJABU MABEGA', comb: 'HGL',  score: 'CCC', div: 'II.18' },
+    ]},
+    { region: 'MOROGORO', students: [
+        { sn: 1, name: 'AGRIPINA RICHARD KIBENA', comb: 'HGL', score: 'CCB', div: 'II.21' },
+        { sn: 2, name: 'AGNESS PIUS KAFEFA',       comb: 'PCM', score: 'BAA', div: 'I.7'   },
+    ]},
+    { region: 'SIMIYU', students: [
+        { sn: 1, name: 'FAITH SAMSON KAMOGE', comb: 'PCB', score: 'CBC', div: 'I.17' },
+    ]},
+    { region: 'RUVUMA', students: [
+        { sn: 1, name: 'REBECA ADAM NGINDO', comb: 'HKL', score: 'CCC', div: 'II.19' },
+    ]},
+    { region: 'GEITA', students: [
+        { sn: 1, name: 'LAILA RASHID THABIT', comb: 'PCM', score: 'CCA', div: 'I.17' },
+    ]},
+    { region: 'MWANZA', students: [
+        { sn: 1, name: 'ADVENTINA GIKUMI PETER',  comb: 'PCB', score: 'AAB', div: 'I.7' },
+        { sn: 2, name: 'NASRA MURSHID ABUBAKARY', comb: 'PCB', score: 'CBC', div: 'I.8' },
+    ]},
+    { region: 'DAR ES SALAAM', students: [
+        { sn: 1, name: 'SASHA SHADHILLY ALLY',       comb: 'HGL',  score: 'BAA', div: 'I.10'  },
+        { sn: 2, name: 'ZIPORAH EMMANUEL NYAMAJEJE', comb: 'HG E', score: 'BC',  div: 'II.18' },
+    ]},
+    { region: 'KILIMANJARO', students: [
+        { sn: 1, name: 'DORCUS JULIUS MAKULE',  comb: 'PCM', score: 'BBA', div: 'I.8'   },
+        { sn: 2, name: 'GLORY HARUNI SAMWENI',  comb: 'HGL', score: 'BBC', div: 'II.18' },
+        { sn: 3, name: 'GLORY MICHAEL TARIMO',  comb: 'PCM', score: 'CCC', div: 'I.15'  },
+    ]},
+];
+
+const boysData = [
+    { region: 'ARUSHA', students: [
+        { sn: 1,  name: 'SAMWEL GERALD MREMI',        comb: 'PCM',  score: 'BBB', div: 'I.12'   },
+        { sn: 2,  name: 'MISANGA ABDILAHI NKUHI',      comb: 'PCB',  score: 'CAA', div: 'I.9'    },
+        { sn: 3,  name: 'CLEVERYCOSMAS NIMLA MBANGU',  comb: 'PCB',  score: 'CBC', div: 'I.13'   },
+        { sn: 4,  name: 'JOHNSON REVOCATUS LUCAS',     comb: 'PCM',  score: 'CBA', div: 'I.14'   },
+        { sn: 5,  name: 'COLMAN EMILIAN MASAWE',       comb: 'PCM',  score: 'CAC', div: 'I.10'   },
+        { sn: 6,  name: 'EDEN SERAPHINA SANDY',        comb: 'HG E', score: 'CC',  div: 'III.22' },
+        { sn: 7,  name: 'JOHNSON DAMIAN MOLLEL',       comb: 'EGM',  score: 'BC',  div: 'I.11'   },
+        { sn: 8,  name: 'MARTIN GASPER TARIMO',        comb: 'EGM',  score: 'BD',  div: 'I.15'   },
+        { sn: 9,  name: 'JOHNSON EBENEZA NYAMA',       comb: 'EGM',  score: 'AC',  div: 'I.12'   },
+        { sn: 10, name: 'BENARD JASTIN KRASIAN',       comb: 'EGM',  score: 'BB',  div: 'I.17'   },
+        { sn: 11, name: 'SELEMAN ALLY NASSORO',        comb: '—',    score: 'CCC', div: 'III.25' },
+        { sn: 12, name: 'CLAUD SEMU MWAKOSYA',         comb: 'HG E', score: 'CB',  div: 'II.20'  },
+        { sn: 13, name: 'FAITH KANANKIRA SIFAEL',      comb: 'HG E', score: 'CC',  div: 'III.22' },
+    ]},
+    { region: 'GEITA', students: [
+        { sn: 1, name: 'REUBEN MATHIUS STEPHANO', comb: 'EGM', score: 'AA',  div: 'I.13' },
+        { sn: 2, name: 'JACOB DANIEL MASESA',      comb: 'PCB', score: 'CBC', div: 'I.10' },
+    ]},
+    { region: 'MWANZA', students: [
+        { sn: 1, name: 'KENNEDY JEREMIAH CHIKWILYA', comb: 'PCM', score: 'CBC', div: 'I.13'   },
+        { sn: 2, name: 'EGBERT EMMANUEL GREGORY',    comb: 'PCB', score: 'CBC', div: 'I.14'   },
+        { sn: 3, name: 'SELEMAN BAHATI BULUBA',       comb: 'HKL', score: 'CCC', div: 'III.25' },
+    ]},
+    { region: 'KAGERA', students: [
+        { sn: 1, name: 'LABORIOUS LEOPHENSION LWANGOGA', comb: 'PCM', score: 'BBA', div: 'I.11' },
+    ]},
+    { region: 'KIGOMA', students: [
+        { sn: 1, name: 'LINUS AMON',    comb: 'PCB', score: 'CBB', div: 'I.9'  },
+        { sn: 2, name: 'RAFIKI JEREMIA', comb: 'PCB', score: 'CBB', div: 'I.13' },
+    ]},
+    { region: 'NJOMBE', students: [
+        { sn: 1, name: 'DISMARK ELIA MNGÓNGÓ', comb: 'HGL', score: 'CCC', div: 'I.21' },
+    ]},
+    { region: 'DODOMA', students: [
+        { sn: 1, name: 'JOEL INNOCENT MTALO', comb: 'PCM', score: 'ABA', div: 'I.11' },
+    ]},
+    { region: 'SIMIYU', students: [
+        { sn: 1, name: 'DEOGRATIAS GODFREY MATANGA', comb: 'HKL', score: 'BCC', div: 'III.24' },
+    ]},
+    { region: 'MOROGORO', students: [
+        { sn: 1, name: 'IBRAHIM OMARY OMARY',    comb: 'HE',  score: 'CC',  div: 'I.17' },
+        { sn: 2, name: 'JOHAKIMU NEMES THOMAS',  comb: 'PCB', score: 'BBC', div: 'I.13' },
+    ]},
+    { region: 'MTWARA', students: [
+        { sn: 1, name: 'MALICK AZIZ MANZI',  comb: 'HG E', score: 'CC',  div: 'II.20' },
+        { sn: 2, name: 'ADAM SAIDI ADINANI', comb: 'HKL',  score: 'BBC', div: 'I.16'  },
+    ]},
+    { region: 'MARA', students: [
+        { sn: 1, name: 'IDD MATIKU JUMA', comb: 'HKL', score: 'DCC', div: 'III.23' },
+    ]},
+    { region: 'TANGA', students: [
+        { sn: 1, name: 'EHUDI ZAKARIA MAUZA',       comb: 'PCM', score: 'BBA', div: 'I.10' },
+        { sn: 2, name: 'CHRISTOPHER EMMANUEL MHINA', comb: 'PCB', score: 'CBA', div: 'I.8'  },
+    ]},
+    { region: 'TABORA', students: [
+        { sn: 1, name: 'PRINCE SWITBERT KALIK',   comb: 'EGM', score: 'CC',  div: 'I.16' },
+        { sn: 2, name: 'MKUTANO MUSALIKA MTANI',  comb: 'PCB', score: 'CAB', div: 'I.8'  },
+    ]},
+    { region: 'SHINYANGA', students: [
+        { sn: 1, name: 'MAJALIWA CHARLES STEPHANO', comb: 'HG E', score: 'CC', div: 'III.22' },
+    ]},
+    { region: 'SINGIDA', students: [
+        { sn: 1, name: 'ISMAIL ATHUMAN SHABANI', comb: 'HG E', score: 'CB',  div: 'II.19' },
+        { sn: 2, name: 'DAVID MUSSA JAPHET',      comb: 'PCB',  score: 'CCB', div: 'I.13'  },
+    ]},
+    { region: 'MBEYA', students: [
+        { sn: 1, name: 'ABDUL SHAIBU MPONDA', comb: 'PCB', score: '—', div: 'I.16' },
+    ]},
+    { region: 'MANYARA', students: [
+        { sn: 1, name: 'ANTONI PETER AMANI',   comb: 'HG E', score: 'CB',  div: 'II.19' },
+        { sn: 2, name: 'DAVID GAUDENSI NGASSA', comb: 'PCM',  score: 'BAA', div: 'I.7'   },
+    ]},
+    { region: 'KILIMANJARO', students: [
+        { sn: 1, name: 'JOSHUA LEONARD HANDRA', comb: 'PCB', score: 'BAB', div: 'I.11' },
+        { sn: 2, name: 'JAPHET JUMANNE KARIA',   comb: 'PCM', score: 'AAA', div: 'I.7'  },
+        { sn: 3, name: 'ANTON MOSSES ANTONY',    comb: 'EGM', score: 'AA',  div: 'I.7'  },
+    ]},
+    { region: 'DAR ES SALAAM', students: [
+        { sn: 1, name: 'STEPHEN STEPHEN LIKOMA', comb: 'PCM', score: 'ABA', div: 'I.7'  },
+        { sn: 2, name: 'DERRICK ETHAR MWELI',     comb: 'HGL', score: 'AAA', div: 'I.10' },
+        { sn: 3, name: 'JOHN PATRICK MHEPELA',   comb: 'EGM', score: 'CC',  div: 'I.17' },
+    ]},
+];
+
+function PracticalResults() {
+    const [tab, setTab] = useState('girls');
+    const [search, setSearch] = useState('');
+
+    const data = tab === 'girls' ? girlsData : boysData;
+    const q = search.trim().toLowerCase();
+
+    const filtered = data
+        .map(r => ({ ...r, students: q ? r.students.filter(s => s.name.toLowerCase().includes(q)) : r.students }))
+        .filter(r => r.students.length > 0);
+
+    const accentColor = tab === 'girls' ? '#b8963c' : '#1a4a9e';
+    const tabBase = { padding: '10px 24px', borderRadius: 999, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', transition: 'all 0.2s' };
+
+    return (
+        <section id="results" style={{ padding: '112px 0 80px', background: '#f8faff' }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+
+                {/* Header */}
+                <div className="reveal" style={{ textAlign: 'center', marginBottom: 48 }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#dcfce7', color: '#166534', fontSize: 11, fontWeight: 700, padding: '8px 16px', borderRadius: 999, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 20 }}>
+                        ✅ Practical Interview Selection — 2026
+                    </div>
+                    <h2 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#0d2b6e', lineHeight: 1.2, marginBottom: 16 }}>
+                        Selected Candidates for <span style={{ color: '#1a4a9e' }}>Practical Interviews</span>
+                    </h2>
+                    <p style={{ color: '#4b5563', fontSize: 17, lineHeight: 1.7, maxWidth: 680, margin: '0 auto' }}>
+                        Congratulations to all <strong>45 boys</strong> and <strong>45 girls</strong> selected from across Tanzania. If your name appears below, you have been called for the practical interview at Cornerstone Leadership Academy.
+                    </p>
+                </div>
+
+                {/* Notice */}
+                <div className="reveal" style={{ background: '#fef3c7', border: '1px solid #fbbf24', borderRadius: 16, padding: '16px 24px', marginBottom: 40, display: 'flex', alignItems: 'flex-start', gap: 14, maxWidth: 820, margin: '0 auto 40px' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#92400e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <p style={{ color: '#78350f', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
+                        <strong>Important:</strong> You will be contacted directly by the school to confirm your practical interview date and details. Please ensure your contact information is up to date. Bring all required documents on the day of your interview. Interviews begin at <strong>7:00 AM</strong> — arrive early.
+                    </p>
+                </div>
+
+                {/* Tab switcher */}
+                <div className="reveal" style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32, flexWrap: 'wrap' }}>
+                    <button onClick={() => { setTab('girls'); setSearch(''); }}
+                        style={{ ...tabBase, background: tab === 'girls' ? 'linear-gradient(135deg, #d4b87a, #e8d5a8)' : '#fff', color: tab === 'girls' ? '#0d2b6e' : '#6b7280', boxShadow: tab === 'girls' ? '0 4px 20px rgba(212,184,122,0.4)' : '0 2px 8px rgba(0,0,0,0.08)' }}>
+                        Selected Girls (45)
+                    </button>
+                    <button onClick={() => { setTab('boys'); setSearch(''); }}
+                        style={{ ...tabBase, background: tab === 'boys' ? 'linear-gradient(135deg, #1a4a9e, #0d2b6e)' : '#fff', color: tab === 'boys' ? '#fff' : '#6b7280', boxShadow: tab === 'boys' ? '0 4px 20px rgba(26,74,158,0.4)' : '0 2px 8px rgba(0,0,0,0.08)' }}>
+                        Selected Boys (45)
+                    </button>
+                </div>
+
+                {/* Search bar */}
+                <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginBottom: 36 }}>
+                    <div style={{ position: 'relative', width: '100%', maxWidth: 420 }}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                            style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
+                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <input
+                            type="text"
+                            placeholder="Search by name…"
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                            style={{ width: '100%', boxSizing: 'border-box', paddingLeft: 44, paddingRight: search ? 40 : 16, paddingTop: 12, paddingBottom: 12, borderRadius: 999, border: '1.5px solid #e5e7eb', outline: 'none', fontSize: 15, color: '#1f2937', background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
+                            onFocus={e => e.target.style.borderColor = accentColor}
+                            onBlur={e => e.target.style.borderColor = '#e5e7eb'}
+                        />
+                        {search && (
+                            <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: 18, lineHeight: 1, padding: 2 }}>×</button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Results */}
+                {filtered.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '48px 24px', background: '#fff', borderRadius: 20, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+                        <div style={{ fontSize: 40, marginBottom: 16 }}>🔍</div>
+                        <p style={{ color: '#374151', fontWeight: 600, fontSize: 16, marginBottom: 8 }}>No candidates found</p>
+                        <p style={{ color: '#9ca3af', fontSize: 14 }}>No match for "{search}".</p>
+                        <button onClick={() => setSearch('')}
+                            style={{ marginTop: 20, background: accentColor, color: '#fff', fontWeight: 700, padding: '10px 24px', borderRadius: 999, border: 'none', cursor: 'pointer', fontSize: 14 }}>
+                            Show all candidates
+                        </button>
+                    </div>
+                ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                        {filtered.map(region => (
+                            <div key={region.region} style={{ background: '#fff', borderRadius: 20, overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+                                {/* Region header */}
+                                <div style={{ background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#e8d5a8', flexShrink: 0 }} />
+                                        <span style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#fff', fontSize: 15, letterSpacing: '0.04em' }}>
+                                            {region.region} REGION
+                                        </span>
+                                    </div>
+                                    <span style={{ background: 'rgba(232,213,168,0.25)', color: '#e8d5a8', fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 999, whiteSpace: 'nowrap' }}>
+                                        {region.students.length} {region.students.length === 1 ? 'candidate' : 'candidates'}
+                                    </span>
+                                </div>
+
+                                {/* Name list */}
+                                <div>
+                                    {region.students.map((s, idx) => (
+                                        <div key={s.sn}
+                                            style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 20px', borderBottom: idx < region.students.length - 1 ? '1px solid #f1f5f9' : 'none', transition: 'background 0.15s' }}
+                                            onMouseEnter={e => e.currentTarget.style.background = '#f8faff'}
+                                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                                            <span style={{ fontSize: 13, color: '#9ca3af', fontWeight: 600, minWidth: 28 }}>{s.sn}.</span>
+                                            <span style={{ fontSize: 15, fontWeight: 600, color: '#0d2b6e' }}>{s.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Footer note */}
+                <div className="reveal" style={{ marginTop: 48, textAlign: 'center' }}>
+                    <p style={{ color: '#9ca3af', fontSize: 13 }}>
+                        For questions, contact: <strong style={{ color: '#0d2b6e' }}>0743 720 672</strong> &nbsp;|&nbsp; <strong style={{ color: '#0d2b6e' }}>0620 301 954</strong>
+                    </p>
                 </div>
             </div>
         </section>
@@ -800,6 +1106,63 @@ function Footer() {
     );
 }
 
+/* ─── Mobile Bottom Bar ─── */
+function MobileBottomBar() {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
+    if (!isMobile) return null;
+
+    const items = [
+        { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>, label: 'Home',       href: '#home'       },
+        { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,                                                                                                                label: 'Admissions', href: '#admissions'  },
+        { icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,                                                                                          label: 'Contact',    href: '#contact'    },
+    ];
+
+    return (
+        <div style={{
+            position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 60,
+            background: 'rgba(13,43,110,0.97)', backdropFilter: 'blur(16px)',
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            paddingBottom: 'env(safe-area-inset-bottom)',
+        }}>
+            {/* Results CTA — full-width prominent button */}
+            <a href="#results" style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)',
+                color: '#0d2b6e', fontWeight: 800, fontSize: 14,
+                padding: '13px 20px', textDecoration: 'none',
+                borderBottom: '1px solid rgba(255,255,255,0.08)',
+                letterSpacing: '0.01em',
+            }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d2b6e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                View Interview Results 2026
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0d2b6e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+
+            {/* Secondary nav icons */}
+            <div style={{ display: 'flex', justifyContent: 'space-around', padding: '8px 0 6px' }}>
+                {items.map(item => (
+                    <a key={item.label} href={item.href} style={{
+                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4,
+                        color: 'rgba(255,255,255,0.65)', textDecoration: 'none', fontSize: 10,
+                        fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase',
+                        padding: '4px 16px', transition: 'color 0.2s',
+                    }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#e8d5a8'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.65)'}>
+                        {item.icon}
+                        {item.label}
+                    </a>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 /* ─── App Root ─── */
 function App() {
     useReveal();
@@ -812,9 +1175,11 @@ function App() {
             <Programs />
             <Testimonials />
             <Admissions />
+            <PracticalResults />
             <Alumni />
             <Contact />
             <Footer />
+            <MobileBottomBar />
         </>
     );
 }
