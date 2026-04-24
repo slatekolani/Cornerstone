@@ -793,9 +793,23 @@ function PracticalResults() {
                 {/* Notice */}
                 <div className="reveal" style={{ background: '#fef3c7', border: '1px solid #fbbf24', borderRadius: 16, padding: '16px 24px', marginBottom: 40, display: 'flex', alignItems: 'flex-start', gap: 14, maxWidth: 820, margin: '0 auto 40px' }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#92400e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <p style={{ color: '#78350f', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
-                        <strong>Important:</strong> You will be contacted directly by the school to confirm your practical interview date and details. Please ensure your contact information is up to date. Bring all required documents on the day of your interview. Interviews begin at <strong>7:00 AM</strong> — arrive early.
-                    </p>
+                    <div style={{ color: '#78350f', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
+                        <p style={{ margin: '0 0 10px' }}>
+                            <strong>Important:</strong> You will be contacted directly by the school to confirm your practical interview date and details. Please ensure your contact information is up to date. Bring all required documents on the day of your interview. Interviews begin at <strong>7:00 AM</strong> — arrive early.
+                        </p>
+                        <p style={{ margin: '0 0 6px' }}>
+                            <strong>Arrival Date:</strong> 24th May &nbsp;|&nbsp; <strong>Departure Date:</strong> 30th May
+                        </p>
+                        <p style={{ margin: '0 0 6px' }}>
+                            <strong>Meeting Point:</strong> Kimahama Book Shop
+                        </p>
+                        <p style={{ margin: '0 0 6px' }}>
+                            <strong>What to Bring — Clothing &amp; Gear:</strong> Heavy/warm clothes (it is a cold season), sportswear
+                        </p>
+                        <p style={{ margin: 0 }}>
+                            <strong>Basic Needs to Pack:</strong> Blanket, toothpaste, washing soap, bathing soap
+                        </p>
+                    </div>
                 </div>
 
                 {/* Tab switcher */}
