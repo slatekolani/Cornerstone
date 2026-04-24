@@ -1008,6 +1008,7 @@ function Contact() {
                             {[
                                 ['📍', 'Location', 'Foothills of Mount Meru, Arusha, Tanzania'],
                                 ['✉️', 'Email', 'headmaster@cornerstoneschooltanzania.ac.tz'],
+                                ['📞', 'Phone', '+255 754 423 290'],
                                 ['🏫', 'Network', 'Cornerstone Development Africa (CDA)'],
                             ].map(([icon, label, value]) => (
                                 <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
