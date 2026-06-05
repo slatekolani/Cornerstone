@@ -94,3 +94,14 @@ body { font-family: 'Inter', sans-serif; margin: 0; }
 
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-float-delay { animation: float 6s ease-in-out 1.5s infinite; }
+
+@media (max-width: 760px) {
+  .final-result-row {
+    grid-template-columns: 1fr !important;
+    padding: 8px 0;
+  }
+
+  .final-result-row > div {
+    padding: 8px 16px !important;
+  }
+}

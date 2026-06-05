@@ -42,6 +42,7 @@ function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const isFinalResultsPage = window.location.search.includes('view=results-2026') || window.location.pathname.startsWith('/results-2026');
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 50);
@@ -54,12 +55,19 @@ function Navbar() {
     const links = ['About', 'Programs', 'Admissions', 'Results', 'Alumni', 'Contact'];
     const hasBg = scrolled || menuOpen;
     const close = () => setMenuOpen(false);
+    const sectionHref = label => {
+        if (label === 'Results') return isFinalResultsPage ? '/?view=results-2026' : '#results';
+        const id = label.toLowerCase();
+        return isFinalResultsPage ? `/#${id}` : `#${id}`;
+    };
+    const homeHref = isFinalResultsPage ? '/' : '#home';
+    const admissionsHref = isFinalResultsPage ? '/#admissions' : '#admissions';
 
     return (
         <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, transition: 'background 0.4s, box-shadow 0.4s', background: hasBg ? 'rgba(13,43,110,0.97)' : 'transparent', backdropFilter: hasBg ? 'blur(12px)' : 'none', boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.3)' : 'none' }}>
             {/* Top bar */}
             <div style={{ maxWidth: 1280, margin: '0 auto', padding: scrolled ? '10px 24px' : '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'padding 0.4s' }}>
-                <a href="#home" onClick={close} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+                <a href={homeHref} onClick={close} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
                     <img src="/Logo/CLA_Tanzania_logo_color.gif" alt="CLA Tanzania Logo" style={{ height: 48, width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.25))' }} />
                     <div>
                         <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#fff', fontSize: 13, lineHeight: 1.2 }}>Cornerstone Leadership</div>
@@ -71,11 +79,11 @@ function Navbar() {
                 {!isMobile && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
                         {links.map(l => (
-                            <a key={l} href={`#${l.toLowerCase()}`} className="nav-link" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: 14, fontWeight: 500, transition: 'color 0.2s' }}
+                            <a key={l} href={sectionHref(l)} className="nav-link" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: 14, fontWeight: 500, transition: 'color 0.2s' }}
                                 onMouseEnter={e => e.target.style.color = '#e8d5a8'}
                                 onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.85)'}>{l}</a>
                         ))}
-                        <a href="#admissions" className="btn-primary" style={{ background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)', color: '#0d2b6e', fontWeight: 700, padding: '10px 22px', borderRadius: 999, fontSize: 14, textDecoration: 'none', transition: 'all 0.3s' }}
+                        <a href={admissionsHref} className="btn-primary" style={{ background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)', color: '#0d2b6e', fontWeight: 700, padding: '10px 22px', borderRadius: 999, fontSize: 14, textDecoration: 'none', transition: 'all 0.3s' }}
                             onMouseEnter={e => { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 8px 25px rgba(232,213,168,0.4)'; }}
                             onMouseLeave={e => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = 'none'; }}>Apply Now</a>
                     </div>
@@ -97,12 +105,12 @@ function Navbar() {
                 <div style={{ overflow: 'hidden', maxHeight: menuOpen ? 500 : 0, transition: 'max-height 0.4s ease', borderTop: menuOpen ? '1px solid rgba(255,255,255,0.1)' : 'none' }}>
                     <div style={{ padding: '12px 24px 28px', display: 'flex', flexDirection: 'column' }}>
                         {links.map(l => (
-                            <a key={l} href={`#${l.toLowerCase()}`} onClick={close}
+                            <a key={l} href={sectionHref(l)} onClick={close}
                                 style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: 16, fontWeight: 500, padding: '13px 0', borderBottom: '1px solid rgba(255,255,255,0.08)', transition: 'color 0.2s' }}
                                 onMouseEnter={e => e.target.style.color = '#e8d5a8'}
                                 onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.85)'}>{l}</a>
                         ))}
-                        <a href="#admissions" onClick={close}
+                        <a href={admissionsHref} onClick={close}
                             style={{ marginTop: 20, display: 'block', textAlign: 'center', background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)', color: '#0d2b6e', fontWeight: 700, padding: '14px', borderRadius: 999, fontSize: 15, textDecoration: 'none' }}>
                             Apply Now
                         </a>
@@ -762,8 +770,31 @@ const boysData = [
 function PracticalResults() {
     const [tab, setTab] = useState('girls');
     const [search, setSearch] = useState('');
+    const [applicants, setApplicants] = useState([]);
 
-    const data = tab === 'girls' ? girlsData : boysData;
+    useEffect(() => {
+        fetch('/results-2026/manifest.json')
+            .then(response => response.json())
+            .then(data => setApplicants(data.applicants || []))
+            .catch(() => setApplicants([]));
+    }, []);
+
+    const groupApplicants = gender => {
+        const groups = new Map();
+        applicants
+            .filter(applicant => applicant.gender.toLowerCase() === gender)
+            .forEach(applicant => {
+                if (!groups.has(applicant.region)) groups.set(applicant.region, []);
+                groups.get(applicant.region).push(applicant);
+            });
+        return Array.from(groups, ([region, students]) => ({ region, students }));
+    };
+
+    const girlsResults = groupApplicants('girls');
+    const boysResults = groupApplicants('boys');
+    const data = tab === 'girls' ? girlsResults : boysResults;
+    const girlsCount = girlsResults.reduce((sum, region) => sum + region.students.length, 0);
+    const boysCount = boysResults.reduce((sum, region) => sum + region.students.length, 0);
     const q = search.trim().toLowerCase();
 
     const filtered = data
@@ -780,34 +811,22 @@ function PracticalResults() {
                 {/* Header */}
                 <div className="reveal" style={{ textAlign: 'center', marginBottom: 48 }}>
                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#dcfce7', color: '#166534', fontSize: 11, fontWeight: 700, padding: '8px 16px', borderRadius: 999, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 20 }}>
-                        ✅ Practical Interview Selection — 2026
+                        Practical Interview Results — 2026
                     </div>
                     <h2 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#0d2b6e', lineHeight: 1.2, marginBottom: 16 }}>
-                        Selected Candidates for <span style={{ color: '#1a4a9e' }}>Practical Interviews</span>
+                        Final Admission <span style={{ color: '#1a4a9e' }}>Results</span>
                     </h2>
                     <p style={{ color: '#4b5563', fontSize: 17, lineHeight: 1.7, maxWidth: 680, margin: '0 auto' }}>
-                        Congratulations to all <strong>45 boys</strong> and <strong>45 girls</strong> selected from across Tanzania. If your name appears below, you have been called for the practical interview at Cornerstone Leadership Academy.
+                        Search your name, view your letter in the browser, or download a copy. Please confirm that you are coming to attend the school by emailing <strong>headmaster@cornerstoneschooltanzania.ac.tz</strong>.
                     </p>
                 </div>
 
                 {/* Notice */}
-                <div className="reveal" style={{ background: '#fef3c7', border: '1px solid #fbbf24', borderRadius: 16, padding: '16px 24px', marginBottom: 40, display: 'flex', alignItems: 'flex-start', gap: 14, maxWidth: 820, margin: '0 auto 40px' }}>
+                <div className="reveal" style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 16, padding: '16px 24px', marginBottom: 40, display: 'flex', alignItems: 'flex-start', gap: 14, maxWidth: 820, margin: '0 auto 40px' }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#92400e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <div style={{ color: '#78350f', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
+                    <div style={{ color: '#166534', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
                         <p style={{ margin: '0 0 10px' }}>
-                            <strong>Important:</strong> You will be contacted directly by the school to confirm your practical interview date and details. Please ensure your contact information is up to date. Bring all required documents on the day of your interview. Interviews begin at <strong>7:00 AM</strong> — arrive early.
-                        </p>
-                        <p style={{ margin: '0 0 6px' }}>
-                            <strong>Arrival Date:</strong> 24th May &nbsp;|&nbsp; <strong>Departure Date:</strong> 30th May
-                        </p>
-                        <p style={{ margin: '0 0 6px' }}>
-                            <strong>Meeting Point:</strong> Kimahama Book Shop
-                        </p>
-                        <p style={{ margin: '0 0 6px' }}>
-                            <strong>What to Bring — Clothing &amp; Gear:</strong> Heavy/warm clothes (it is a cold season), sportswear
-                        </p>
-                        <p style={{ margin: 0 }}>
-                            <strong>Basic Needs to Pack:</strong> Blanket, toothpaste, washing soap, bathing soap
+                            <strong>Important:</strong> Please confirm your coming to attend the school, or confirm joining via email: <strong>headmaster@cornerstoneschooltanzania.ac.tz</strong>.
                         </p>
                     </div>
                 </div>
@@ -816,11 +835,11 @@ function PracticalResults() {
                 <div className="reveal" style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32, flexWrap: 'wrap' }}>
                     <button onClick={() => { setTab('girls'); setSearch(''); }}
                         style={{ ...tabBase, background: tab === 'girls' ? 'linear-gradient(135deg, #d4b87a, #e8d5a8)' : '#fff', color: tab === 'girls' ? '#0d2b6e' : '#6b7280', boxShadow: tab === 'girls' ? '0 4px 20px rgba(212,184,122,0.4)' : '0 2px 8px rgba(0,0,0,0.08)' }}>
-                        Selected Girls (45)
+                        Girls ({girlsCount || '...'})
                     </button>
                     <button onClick={() => { setTab('boys'); setSearch(''); }}
                         style={{ ...tabBase, background: tab === 'boys' ? 'linear-gradient(135deg, #1a4a9e, #0d2b6e)' : '#fff', color: tab === 'boys' ? '#fff' : '#6b7280', boxShadow: tab === 'boys' ? '0 4px 20px rgba(26,74,158,0.4)' : '0 2px 8px rgba(0,0,0,0.08)' }}>
-                        Selected Boys (45)
+                        Boys ({boysCount || '...'})
                     </button>
                 </div>
 
@@ -881,8 +900,12 @@ function PracticalResults() {
                                             style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 20px', borderBottom: idx < region.students.length - 1 ? '1px solid #f1f5f9' : 'none', transition: 'background 0.15s' }}
                                             onMouseEnter={e => e.currentTarget.style.background = '#f8faff'}
                                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                                            <span style={{ fontSize: 13, color: '#9ca3af', fontWeight: 600, minWidth: 28 }}>{s.sn}.</span>
-                                            <span style={{ fontSize: 15, fontWeight: 600, color: '#0d2b6e' }}>{s.name}</span>
+                                            <span style={{ fontSize: 13, color: '#9ca3af', fontWeight: 600, minWidth: 28 }}>{idx + 1}.</span>
+                                            <span style={{ fontSize: 15, fontWeight: 600, color: '#0d2b6e', flex: 1 }}>{s.name}</span>
+                                            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                                                <a href={`/results-2026/letters/${s.filename}`} target="_blank" rel="noopener" style={{ background: '#0d2b6e', color: '#fff', fontSize: 12, fontWeight: 800, padding: '7px 11px', borderRadius: 6, textDecoration: 'none' }}>View</a>
+                                                <a href={`/results-2026/letters/${s.filename}`} download style={{ background: '#eef4ff', color: '#0d2b6e', fontSize: 12, fontWeight: 800, padding: '7px 11px', borderRadius: 6, textDecoration: 'none' }}>Download</a>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
@@ -1077,6 +1100,95 @@ function Contact() {
     );
 }
 
+/* ─── Final Admission Results 2026 ─── */
+function FinalAdmissionResults() {
+    const [applicants, setApplicants] = useState([]);
+    const [summary, setSummary] = useState({ total: 0, passed: 0, rejected: 0 });
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        fetch('/results-2026/manifest.json')
+            .then(response => response.json())
+            .then(data => {
+                setApplicants(data.applicants || []);
+                setSummary({
+                    total: data.total || 0,
+                    passed: data.passed || 0,
+                    rejected: data.rejected || 0,
+                });
+            })
+            .catch(() => {
+                setApplicants([]);
+                setSummary({ total: 0, passed: 0, rejected: 0 });
+            });
+    }, []);
+
+    const q = search.trim().toLowerCase();
+    const filtered = applicants.filter(applicant => {
+        return !q || applicant.name.toLowerCase().includes(q);
+    });
+
+    return (
+        <main style={{ background: '#f8faff', minHeight: '100vh', paddingTop: 96 }}>
+            <section style={{ background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', color: '#fff', padding: '72px 0 56px' }}>
+                <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(232,213,168,0.16)', color: '#e8d5a8', fontSize: 11, fontWeight: 700, padding: '8px 16px', borderRadius: 999, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 22 }}>
+                        Practical Interview Results — 2026
+                    </div>
+                    <h1 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 900, fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', lineHeight: 1.08, margin: '0 0 18px' }}>
+                        Admission Letters
+                    </h1>
+                    <p style={{ color: 'rgba(255,255,255,0.76)', fontSize: 17, lineHeight: 1.7, maxWidth: 760 }}>
+                        Search your name, view your letter in the browser, or download a copy.
+                    </p>
+                </div>
+            </section>
+
+            <section style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 24px 80px' }}>
+                <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 8, padding: 18, marginBottom: 20, color: '#166534', lineHeight: 1.7 }}>
+                    <strong>Please confirm your coming to attend the school</strong>, or confirm joining via email: <strong>headmaster@cornerstoneschooltanzania.ac.tz</strong>.
+                </div>
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 18 }}>
+                    <input
+                        value={search}
+                        onChange={event => setSearch(event.target.value)}
+                        placeholder="Search name"
+                        aria-label="Search name"
+                        style={{ flex: 1, minWidth: 240, border: '1px solid #cfd7e6', borderRadius: 8, padding: '12px 14px', fontSize: 15, outline: 'none', background: '#fff' }}
+                    />
+                </div>
+
+                <p style={{ color: '#526079', fontSize: 14, marginBottom: 24 }}>{summary.total} names are listed. Use the action column to view the letter in your browser or download a copy.</p>
+
+                <div style={{ background: '#fff', borderRadius: 8, overflow: 'hidden', boxShadow: '0 8px 28px rgba(13,43,110,0.08)' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 210px', gap: 0, background: '#102f75', color: '#fff', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 800 }}>
+                        <div style={{ padding: '13px 16px' }}>Name</div>
+                        <div style={{ padding: '13px 16px' }}>Action</div>
+                    </div>
+
+                    {filtered.length === 0 ? (
+                        <div style={{ padding: 34, color: '#526079', textAlign: 'center' }}>No applicants found.</div>
+                    ) : (
+                        filtered.map(applicant => {
+                            const letterUrl = `/results-2026/letters/${applicant.filename}`;
+                            return (
+                                <div key={`${applicant.gender}-${applicant.name}`} className="final-result-row" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 210px', borderBottom: '1px solid #edf1f7', alignItems: 'center' }}>
+                                    <div style={{ padding: '13px 16px', color: '#0d2b6e', fontWeight: 800 }}>{applicant.name}</div>
+                                    <div style={{ padding: '13px 16px', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                                        <a href={letterUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: 34, padding: '8px 12px', borderRadius: 6, background: '#0d2b6e', color: '#fff', fontWeight: 800, textDecoration: 'none' }}>View</a>
+                                        <a href={letterUrl} download style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: 34, padding: '8px 12px', borderRadius: 6, background: '#eef4ff', color: '#0d2b6e', fontWeight: 800, textDecoration: 'none' }}>Download</a>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    )}
+                </div>
+            </section>
+        </main>
+    );
+}
+
 /* ─── Footer ─── */
 function Footer() {
     return (
@@ -1113,7 +1225,11 @@ function Footer() {
                     </div>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-                    <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>© {new Date().getFullYear()} Cornerstone Leadership Academy Tanzania. Part of Cornerstone Development Africa.</p>
+                    <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>
+                        © {new Date().getFullYear()} Cornerstone Leadership Academy{' '}
+                        <a href="/?view=results-2026" style={{ color: 'inherit', textDecoration: 'none', cursor: 'default' }}>Tanzania</a>.
+                        {' '}Part of Cornerstone Development Africa.
+                    </p>
                     <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>Made with ❤️ for Tanzania's future leaders</p>
                 </div>
             </div>
@@ -1181,6 +1297,18 @@ function MobileBottomBar() {
 /* ─── App Root ─── */
 function App() {
     useReveal();
+    const isFinalResultsPage = window.location.search.includes('view=results-2026') || window.location.pathname.startsWith('/results-2026');
+
+    if (isFinalResultsPage) {
+        return (
+            <>
+                <Navbar />
+                <FinalAdmissionResults />
+                <Footer />
+            </>
+        );
+    }
+
     return (
         <>
             <Navbar />
