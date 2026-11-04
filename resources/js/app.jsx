@@ -42,8 +42,6 @@ function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const isFinalResultsPage = window.location.search.includes('view=results-2026') || window.location.pathname.startsWith('/results-2026');
-
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 50);
         const onResize = () => { setIsMobile(window.innerWidth < 768); };
@@ -52,16 +50,12 @@ function Navbar() {
         return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize); };
     }, []);
 
-    const links = ['About', 'Programs', 'Admissions', 'Results', 'Alumni', 'Contact'];
+    const links = ['About', 'Programs', 'Admissions', 'Alumni', 'Contact'];
     const hasBg = scrolled || menuOpen;
     const close = () => setMenuOpen(false);
-    const sectionHref = label => {
-        if (label === 'Results') return isFinalResultsPage ? '/?view=results-2026' : '#results';
-        const id = label.toLowerCase();
-        return isFinalResultsPage ? `/#${id}` : `#${id}`;
-    };
-    const homeHref = isFinalResultsPage ? '/' : '#home';
-    const admissionsHref = isFinalResultsPage ? '/#admissions' : '#admissions';
+    const sectionHref = label => `#${label.toLowerCase()}`;
+    const homeHref = '#home';
+    const admissionsHref = '#admissions';
 
     return (
         <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, transition: 'background 0.4s, box-shadow 0.4s', background: hasBg ? 'rgba(13,43,110,0.97)' : 'transparent', backdropFilter: hasBg ? 'blur(12px)' : 'none', boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.3)' : 'none' }}>
@@ -125,33 +119,19 @@ function Navbar() {
 function Hero() {
     return (
         <section id="home" className="hero-bg" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', position: 'relative' }}>
-            <div style={{ position: 'absolute', top: 80, right: 80, width: 288, height: 288, borderRadius: '50%', background: 'rgba(232,213,168,0.06)', filter: 'blur(60px)' }} />
-            <div style={{ position: 'absolute', bottom: 128, left: 40, width: 384, height: 384, borderRadius: '50%', background: 'rgba(30,92,197,0.15)', filter: 'blur(60px)' }} />
-            <div className="animate-float" style={{ position: 'absolute', top: 130, right: 96 }}>
-                <div className="glass" style={{ borderRadius: 16, padding: '12px 16px', textAlign: 'center' }}>
-                    <div style={{ color: '#e8d5a8', fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 24 }}>2011</div>
-                    <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, marginTop: 2 }}>Est. in Arusha</div>
-                </div>
-            </div>
-            <div className="animate-float-delay" style={{ position: 'absolute', bottom: 160, right: 140 }}>
-                <div className="glass" style={{ borderRadius: 16, padding: '12px 16px', textAlign: 'center' }}>
-                    <div style={{ color: '#e8d5a8', fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 24 }}>100%</div>
-                    <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, marginTop: 2 }}>Scholarship</div>
-                </div>
-            </div>
             <div style={{ maxWidth: 1280, margin: '0 auto', padding: '112px 24px 80px', width: '100%' }}>
                 <div style={{ maxWidth: 720 }}>
                     <div className="badge" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#0d2b6e', fontSize: 11, fontWeight: 700, padding: '8px 16px', borderRadius: 999, marginBottom: 32, textTransform: 'uppercase', letterSpacing: '0.15em', boxShadow: '0 4px 15px rgba(201,168,76,0.35)' }}>
-                        ⭐ Arusha, Tanzania · Est. 2011
+                        Arusha, Tanzania · Est. 2011
                     </div>
                     <h1 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 900, fontSize: 'clamp(3rem, 7vw, 5rem)', color: '#fff', lineHeight: 1.05, marginBottom: 24 }}>
                         Shaping<br />
-                        <span className="gradient-text">Africa's Next</span><br />
+                        <span style={{ color: '#e8d5a8' }}>Africa's Next</span><br />
                         Generation of<br />
                         Leaders
                     </h1>
                     <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 18, lineHeight: 1.7, maxWidth: 560, marginBottom: 40 }}>
-                        Nestled at the foothills of Mount Meru, CLA Tanzania transforms brilliant young minds from into visionary leaders — fully on scholarship.
+                        Nestled at the foothills of Mount Meru, CLA Tanzania transforms brilliant young minds into visionary leaders — fully on scholarship.
                     </p>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
                         <a href="#admissions" className="btn-primary" style={{ background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)', color: '#0d2b6e', fontWeight: 700, padding: '16px 32px', borderRadius: 999, fontSize: 16, textDecoration: 'none', transition: 'all 0.3s', display: 'inline-block' }}
@@ -175,11 +155,6 @@ function Hero() {
                     </div>
                 </div>
             </div>
-            <div className="mountain" />
-            <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
-                <span>Scroll</span>
-                <div style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, rgba(255,255,255,0.4), transparent)' }} />
-            </div>
         </section>
     );
 }
@@ -188,25 +163,13 @@ function Hero() {
 function About() {
     return (
         <section id="about" style={{ padding: '112px 0', background: '#fff', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: 0, right: 0, width: 384, height: 384, background: '#eef2ff', borderRadius: '50%', transform: 'translate(50%, -50%)', filter: 'blur(60px)' }} />
             <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 64, alignItems: 'center' }}>
                     <div className="reveal" style={{ position: 'relative' }}>
                         <div style={{ borderRadius: 24, overflow: 'hidden', background: 'linear-gradient(135deg, #1a4a9e, #0d2b6e)', aspectRatio: '4/5', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <svg viewBox="0 0 400 500" style={{ width: '100%', height: '100%', opacity: 0.15, position: 'absolute' }} fill="none">
-                                <circle cx="200" cy="200" r="160" stroke="#e8d5a8" strokeWidth="1" strokeDasharray="8 4" />
-                                <circle cx="200" cy="200" r="120" stroke="#e8d5a8" strokeWidth="1" strokeDasharray="4 8" />
-                                <path d="M100 350 L200 200 L300 350" stroke="#e8d5a8" strokeWidth="1.5" />
-                                <path d="M80 350 L200 150 L320 350" stroke="#e8d5a8" strokeWidth="0.5" opacity="0.5" />
-                                <circle cx="200" cy="200" r="20" fill="#e8d5a8" opacity="0.4" />
-                            </svg>
-                            <div style={{ position: 'absolute', inset: 0 }}>
-                                <img src="/Images/First%20Class.jpeg" alt="CLA First Class" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
-                            </div>
-
+                            <img src="/Images/First%20Class.jpeg" alt="CLA First Class" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
-                        <div style={{ position: 'absolute', right: -24, top: 48, background: '#fff', borderRadius: 16, boxShadow: '0 20px 50px rgba(0,0,0,0.15)', padding: 20, maxWidth: 160 }}>
-                            <div style={{ width: 40, height: 40, background: '#eef2ff', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, marginBottom: 12 }}>🎓</div>
+                        <div style={{ position: 'absolute', left: 20, bottom: 20, background: '#fff', borderRadius: 16, boxShadow: '0 12px 30px rgba(0,0,0,0.18)', padding: '14px 20px' }}>
                             <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#0d2b6e', fontSize: 18 }}>First Class</div>
                             <div style={{ color: '#9ca3af', fontSize: 12, marginTop: 4 }}>Graduated 2013</div>
                         </div>
@@ -226,11 +189,10 @@ function About() {
                             Part of the <strong style={{ color: '#374151' }}>Cornerstone Development Africa (CDA)</strong> network spanning 7 East African nations, our academy has become a beacon of transformational education — producing leaders who go on to drive change in government, business, medicine, and civil society.
                         </p>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-                            {[['🌱', 'Character', 'Built through service & integrity'], ['💡', 'Excellence', 'Academic & personal mastery'], ['🤝', 'Community', 'Giving back always']].map(([icon, title, desc]) => (
+                            {[['Character', 'Built through service & integrity'], ['Excellence', 'Academic & personal mastery'], ['Community', 'Giving back always']].map(([title, desc]) => (
                                 <div key={title} style={{ background: '#eef2ff', borderRadius: 16, padding: 16, textAlign: 'center', transition: 'background 0.2s', cursor: 'default' }}
                                     onMouseEnter={e => e.currentTarget.style.background = '#dbeafe'}
                                     onMouseLeave={e => e.currentTarget.style.background = '#eef2ff'}>
-                                    <div style={{ fontSize: 24, marginBottom: 8 }}>{icon}</div>
                                     <div style={{ fontWeight: 600, color: '#0d2b6e', fontSize: 14 }}>{title}</div>
                                     <div style={{ color: '#6b7280', fontSize: 12, marginTop: 4 }}>{desc}</div>
                                 </div>
@@ -249,22 +211,17 @@ function About() {
 /* ─── Stats Banner ─── */
 function Stats() {
     const stats = [
-        { icon: '🎓', value: 50,  suffix: '+', label: 'Scholars Each Year' },
-        { icon: '🏫', value: 14,  suffix: '+', label: 'Years of Excellence' },
-        { icon: '🌍', value: 7,   suffix: '',  label: 'Countries in Network' },
-        { icon: '🎉', value: 600, suffix: '+', label: 'Alumni Worldwide' },
+        { value: 50,  suffix: '+', label: 'Scholars Each Year' },
+        { value: 14,  suffix: '+', label: 'Years of Excellence' },
+        { value: 7,   suffix: '',  label: 'Countries in Network' },
+        { value: 600, suffix: '+', label: 'Alumni Worldwide' },
     ];
     return (
         <section style={{ background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e, #0d2b6e)', padding: '80px 0', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.08 }}>
-                <div style={{ position: 'absolute', top: 16, left: '25%', width: 256, height: 256, background: '#e8d5a8', borderRadius: '50%', filter: 'blur(60px)' }} />
-                <div style={{ position: 'absolute', bottom: 16, right: '25%', width: 256, height: 256, background: '#e8d5a8', borderRadius: '50%', filter: 'blur(60px)' }} />
-            </div>
             <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32 }}>
                     {stats.map(s => (
                         <div key={s.label} className="reveal stat-card" style={{ borderRadius: 16, padding: 24, textAlign: 'center' }}>
-                            <div style={{ fontSize: 32, marginBottom: 12 }}>{s.icon}</div>
                             <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 900, fontSize: 48, color: '#e8d5a8', marginBottom: 8 }}>
                                 <Counter target={s.value} suffix={s.suffix} />
                             </div>
@@ -280,12 +237,12 @@ function Stats() {
 /* ─── Programs ─── */
 function Programs() {
     const subjects = [
-        { icon: '🧮', name: 'Mathematics',    desc: 'Advanced calculus, statistics and quantitative reasoning.', border: '#bfdbfe' },
-        { icon: '⚗️', name: 'Sciences',       desc: 'Physics, Chemistry & Biology with hands-on laboratory work.', border: '#e9d5ff' },
-        { icon: '📖', name: 'Languages',      desc: 'English & Kiswahili — communication for global leadership.', border: '#fde68a' },
-        { icon: '🌐', name: 'Social Sciences',desc: 'History, Geography, Economics & General Studies.', border: '#bbf7d0' },
-        { icon: '🏛️', name: 'Leadership',    desc: 'Ethics, servant leadership and civic responsibility.', border: '#fecaca' },
-        { icon: '💻', name: 'Technology',     desc: 'Digital literacy and 21st century technology skills.', border: '#a5f3fc' },
+        { name: 'Mathematics',    desc: 'Advanced calculus, statistics and quantitative reasoning.' },
+        { name: 'Sciences',       desc: 'Physics, Chemistry & Biology with hands-on laboratory work.' },
+        { name: 'Languages',      desc: 'English & Kiswahili — communication for global leadership.' },
+        { name: 'Social Sciences',desc: 'History, Geography, Economics & General Studies.' },
+        { name: 'Leadership',    desc: 'Ethics, servant leadership and civic responsibility.' },
+        { name: 'Technology',     desc: 'Digital literacy and 21st century technology skills.' },
     ];
     return (
         <section id="programs" style={{ padding: '112px 0', background: '#f8faff' }}>
@@ -298,30 +255,22 @@ function Programs() {
                     <p style={{ color: '#6b7280', fontSize: 18, lineHeight: 1.6 }}>Our Advanced Level curriculum blends rigorous academics with character development to prepare scholars for Africa's biggest challenges.</p>
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
-                    {subjects.map(s => (
-                        <div key={s.name} className="reveal prog-card" style={{ background: '#fff', borderRadius: 24, padding: 28, border: `2px solid ${s.border}`, cursor: 'default' }}>
-                            <div style={{ fontSize: 40, marginBottom: 16 }}>{s.icon}</div>
+                    {subjects.map((s, i) => (
+                        <div key={s.name} className="reveal prog-card" style={{ background: '#fff', borderRadius: 16, padding: '28px 28px 32px', borderTop: '4px solid #c9a84c', boxShadow: '0 2px 12px rgba(13,43,110,0.06)', cursor: 'default' }}>
+                            <div style={{ color: '#b8963c', fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 14, letterSpacing: '0.1em', marginBottom: 14 }}>{String(i + 1).padStart(2, '0')}</div>
                             <h3 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 20, color: '#0d2b6e', marginBottom: 8 }}>{s.name}</h3>
                             <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.6 }}>{s.desc}</p>
                         </div>
                     ))}
                 </div>
-                <div className="reveal" style={{ marginTop: 48, background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', borderRadius: 24, padding: 48, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32, alignItems: 'center' }}>
+                <div className="reveal" style={{ marginTop: 48, background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', borderRadius: 24, padding: '48px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40, alignItems: 'center' }}>
                     <div>
                         <h3 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 28, color: '#fff', marginBottom: 16 }}>Beyond the Classroom</h3>
-                        <p style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, marginBottom: 24 }}>CLA scholars engage in sports, arts, community service, debate, mentorship, and entrepreneurship that develop the whole person.</p>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-                            {['Sports', 'Debate', 'Community Service', 'Arts', 'Mentorship', 'Entrepreneurship'].map(tag => (
-                                <span key={tag} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)', fontSize: 12, padding: '8px 16px', borderRadius: 999 }}>{tag}</span>
-                            ))}
-                        </div>
+                        <p style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>CLA scholars engage in sports, arts, community service, debate, mentorship, and entrepreneurship that develop the whole person.</p>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                        {[['🏆', 'Excellence Driven'], ['🫂', 'Peer Mentorship'], ['🌿', 'Environmental Steward'], ['🎨', 'Arts & Culture']].map(([icon, label]) => (
-                            <div key={label} className="glass" style={{ borderRadius: 16, padding: 20, textAlign: 'center' }}>
-                                <div style={{ fontSize: 24, marginBottom: 8 }}>{icon}</div>
-                                <div style={{ color: '#fff', fontSize: 14, fontWeight: 500 }}>{label}</div>
-                            </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                        {['Sports', 'Debate', 'Community Service', 'Arts', 'Mentorship', 'Entrepreneurship'].map(tag => (
+                            <span key={tag} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', fontSize: 14, fontWeight: 500, padding: '12px 22px', borderRadius: 999 }}>{tag}</span>
                         ))}
                     </div>
                 </div>
@@ -344,11 +293,6 @@ function Testimonials() {
     }, []);
     return (
         <section style={{ padding: '112px 0', background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.05 }}>
-                {[...Array(5)].map((_, i) => (
-                    <div key={i} style={{ position: 'absolute', borderRadius: '50%', border: '1px solid #e8d5a8', width: `${(i + 1) * 18}%`, height: `${(i + 1) * 18}%`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
-                ))}
-            </div>
             <div className="reveal" style={{ maxWidth: 768, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.1)', color: '#e8d5a8', fontSize: 11, fontWeight: 700, padding: '8px 16px', borderRadius: 999, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 48 }}>
                     Voices of Our Scholars
@@ -359,7 +303,6 @@ function Testimonials() {
                             <div className="quote-mark">"</div>
                             <p style={{ color: '#fff', fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', lineHeight: 1.7, fontWeight: 300, marginBottom: 32, marginTop: -20 }}>{q.quote}</p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                                <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>🇹🇿</div>
                                 <div style={{ textAlign: 'left' }}>
                                     <div style={{ color: '#fff', fontWeight: 600 }}>{q.name}</div>
                                     <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 14 }}>{q.year}</div>
@@ -405,10 +348,6 @@ function Admissions() {
         return 'upcoming';
     }
 
-    const lastInterviewEnd = new Date('2026-03-28'); lastInterviewEnd.setHours(23, 59, 59, 999);
-    const allDone = new Date() > lastInterviewEnd;
-    // Set to true when first-round results are ready to publish
-    const resultsAvailable = true;
 
     const statusStyle = {
         completed: { bg: '#dcfce7', color: '#166534', label: 'Completed' },
@@ -517,36 +456,6 @@ function Admissions() {
                         <div>
                             <h3 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 22, color: '#0d2b6e', marginBottom: 16 }}>Interview Schedule — 2026</h3>
 
-                            {allDone && (
-                                resultsAvailable ? (
-                                    <div style={{ background: '#f0fdf4', border: '1.5px solid #86efac', borderRadius: 16, padding: '18px 20px', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#166534" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                            <div>
-                                                <p style={{ fontWeight: 700, color: '#166534', fontSize: 14, marginBottom: 2 }}>First-round results are out!</p>
-                                                <p style={{ color: '#15803d', fontSize: 13 }}>Check whether you have been called for the second (practical) interview.</p>
-                                            </div>
-                                        </div>
-                                        <a href="#results" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#16a34a', color: '#fff', fontWeight: 700, fontSize: 13, padding: '10px 20px', borderRadius: 999, textDecoration: 'none', whiteSpace: 'nowrap', transition: 'background 0.2s' }}
-                                            onMouseEnter={e => e.currentTarget.style.background = '#15803d'}
-                                            onMouseLeave={e => e.currentTarget.style.background = '#16a34a'}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                                            See Interview Results
-                                        </a>
-                                    </div>
-                                ) : (
-                                    <div style={{ background: '#fef3c7', border: '1px solid #fbbf24', borderRadius: 16, padding: '16px 20px', marginBottom: 20, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#92400e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 1 }}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                        <div>
-                                            <p style={{ fontWeight: 700, color: '#92400e', fontSize: 14, marginBottom: 4 }}>All interviews have concluded</p>
-                                            <p style={{ color: '#a16207', fontSize: 13, lineHeight: 1.6 }}>
-                                                The interview results are still not out. We will <strong>call you</strong> to inform you about your second interview. Please wait for our call.
-                                            </p>
-                                        </div>
-                                    </div>
-                                )
-                            )}
-
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                                 {venues.map(v => {
                                     const status = getStatus(v.start, v.end);
@@ -590,341 +499,6 @@ function Admissions() {
     );
 }
 
-/* ─── Practical Interview Results 2026 ─── */
-const girlsData = [
-    { region: 'ARUSHA', students: [
-        { sn: 1,  name: 'LETICIA FULUSTAN MARANDU',   comb: 'PCB', score: 'BBC', div: 'I.14'   },
-        { sn: 2,  name: 'PEACE AFITWA PALLANGYO',      comb: 'PCM', score: 'CBB', div: 'I.12'   },
-        { sn: 3,  name: 'MERCIANA JOSEPH MZAVA',       comb: 'PCM', score: 'AAA', div: 'I.7'    },
-        { sn: 4,  name: 'RACHEL MSAFIRI SHAMI',        comb: 'PCB', score: 'CBC', div: 'I.11'   },
-        { sn: 5,  name: 'ELESIA MATOKEO SEGELE',       comb: 'HKL', score: 'CBC', div: 'III.24' },
-        { sn: 6,  name: 'ELIZABETH LOISHIYE LOISHIYE', comb: 'HGL', score: 'CCB', div: 'II.18'  },
-        { sn: 7,  name: 'MWAJUMA BAKARI JUMAA',        comb: 'HKL', score: 'ACA', div: 'I.17'   },
-        { sn: 8,  name: 'YUSTINA GILBART MITALAMI',    comb: 'HE',  score: 'AC',  div: 'I.15'   },
-        { sn: 9,  name: 'MOREEN LEONARD KWEKA',        comb: 'EGM', score: 'BA',  div: 'I.15'   },
-        { sn: 10, name: 'MARTHA EMMANUEL BOAZ',        comb: 'HGL', score: 'CCB', div: 'II.20'  },
-        { sn: 11, name: 'SOPHIA DIDAS MELEJI',         comb: 'HKL', score: 'CCD', div: 'II.25'  },
-        { sn: 12, name: 'MEDLINE ELIAS MOLLEL',        comb: 'HGL', score: 'CCC', div: 'III.22' },
-    ]},
-    { region: 'DODOMA', students: [
-        { sn: 1, name: 'JOANNA SALALA MALIMI',  comb: 'PCM', score: 'AAA', div: 'I.7' },
-        { sn: 2, name: 'MACKLINA MUSSA LUHAMO', comb: 'PCM', score: 'CAA', div: 'I.7' },
-    ]},
-    { region: 'LINDI', students: [
-        { sn: 1, name: 'CHRISTINA CLEMENT MAGIGE', comb: 'PCM', score: 'BAA', div: 'I.11' },
-    ]},
-    { region: 'NJOMBE', students: [
-        { sn: 1, name: 'JEMAIDA GERMANUS MNYIKA', comb: 'PCB', score: 'CCC', div: 'I.15'  },
-        { sn: 2, name: 'WINFRIDA PIUS NZIKU',      comb: 'HE',  score: 'CC',  div: 'II.18' },
-    ]},
-    { region: 'MBEYA', students: [
-        { sn: 1, name: 'ELIZABETH ARON NASENGA', comb: 'PCB', score: 'BAA', div: 'I.7' },
-    ]},
-    { region: 'KAGERA', students: [
-        { sn: 1, name: 'NAOMI WINCHISLAUS SYLVESTER', comb: 'PCB', score: 'CAB', div: 'I.8' },
-    ]},
-    { region: 'IRINGA', students: [
-        { sn: 1, name: 'JESCAR BILAL NGOGO',  comb: 'HGL', score: 'CCB', div: 'III.22' },
-        { sn: 2, name: 'NEEMA JULIUS NGULO',  comb: 'HKL', score: 'CBC', div: 'III.22' },
-    ]},
-    { region: 'ZANZIBAR', students: [
-        { sn: 1, name: 'DEVOTHA DEOGRATIUS MAO', comb: 'PCB', score: 'BAB', div: 'I.9' },
-    ]},
-    { region: 'MARA', students: [
-        { sn: 1, name: 'IVON LUCAS MANGÍRA', comb: 'HGL', score: 'BBC', div: 'II.19' },
-    ]},
-    { region: 'PWANI', students: [
-        { sn: 1, name: 'MEHREEN ABDUL MOHAMED',    comb: 'PCB', score: 'CBB', div: 'I.12' },
-        { sn: 2, name: 'LAURENCIA RICHARD KACHWELE', comb: 'EGM', score: 'BCC', div: 'I.14' },
-        { sn: 3, name: 'LAURA GODFREY MALONGO',    comb: 'HGL', score: 'CCB', div: 'I.16' },
-    ]},
-    { region: 'SHINYANGA', students: [
-        { sn: 1, name: 'BETTY MATHIAS PETER', comb: 'PCM', score: 'BBA', div: 'I.8' },
-    ]},
-    { region: 'MANYARA', students: [
-        { sn: 1, name: 'OLIMPIA LEONARD LAURENT', comb: 'HGL', score: 'BCC', div: 'III.22' },
-        { sn: 2, name: 'NASMA HARUNA KAJULA',      comb: 'HGL', score: 'BCC', div: 'III.22' },
-    ]},
-    { region: 'TANGA', students: [
-        { sn: 1, name: 'NEEMA ISHENGOMA MAFIE', comb: 'PCB', score: 'CCC', div: 'I.11'   },
-        { sn: 2, name: 'JUSLIN ISAACK SINION',   comb: 'HKL', score: 'DAC', div: 'III.23' },
-    ]},
-    { region: 'MTWARA', students: [
-        { sn: 1, name: 'BADRA SAME HAMIS',   comb: 'HG E', score: 'CB',  div: 'II.20' },
-        { sn: 2, name: 'SARA RAJABU MABEGA', comb: 'HGL',  score: 'CCC', div: 'II.18' },
-    ]},
-    { region: 'MOROGORO', students: [
-        { sn: 1, name: 'AGRIPINA RICHARD KIBENA', comb: 'HGL', score: 'CCB', div: 'II.21' },
-        { sn: 2, name: 'AGNESS PIUS KAFEFA',       comb: 'PCM', score: 'BAA', div: 'I.7'   },
-    ]},
-    { region: 'SIMIYU', students: [
-        { sn: 1, name: 'FAITH SAMSON KAMOGE', comb: 'PCB', score: 'CBC', div: 'I.17' },
-    ]},
-    { region: 'RUVUMA', students: [
-        { sn: 1, name: 'REBECA ADAM NGINDO', comb: 'HKL', score: 'CCC', div: 'II.19' },
-    ]},
-    { region: 'GEITA', students: [
-        { sn: 1, name: 'LAILA RASHID THABIT', comb: 'PCM', score: 'CCA', div: 'I.17' },
-    ]},
-    { region: 'MWANZA', students: [
-        { sn: 1, name: 'ADVENTINA GIKUMI PETER',  comb: 'PCB', score: 'AAB', div: 'I.7' },
-        { sn: 2, name: 'NASRA MURSHID ABUBAKARY', comb: 'PCB', score: 'CBC', div: 'I.8' },
-    ]},
-    { region: 'DAR ES SALAAM', students: [
-        { sn: 1, name: 'SASHA SHADHILLY ALLY',       comb: 'HGL',  score: 'BAA', div: 'I.10'  },
-        { sn: 2, name: 'ZIPORAH EMMANUEL NYAMAJEJE', comb: 'HG E', score: 'BC',  div: 'II.18' },
-    ]},
-    { region: 'KILIMANJARO', students: [
-        { sn: 1, name: 'DORCUS JULIUS MAKULE',  comb: 'PCM', score: 'BBA', div: 'I.8'   },
-        { sn: 2, name: 'GLORY HARUNI SAMWENI',  comb: 'HGL', score: 'BBC', div: 'II.18' },
-        { sn: 3, name: 'GLORY MICHAEL TARIMO',  comb: 'PCM', score: 'CCC', div: 'I.15'  },
-    ]},
-];
-
-const boysData = [
-    { region: 'ARUSHA', students: [
-        { sn: 1,  name: 'SAMWEL GERALD MREMI',        comb: 'PCM',  score: 'BBB', div: 'I.12'   },
-        { sn: 2,  name: 'MISANGA ABDILAHI NKUHI',      comb: 'PCB',  score: 'CAA', div: 'I.9'    },
-        { sn: 3,  name: 'CLEVERYCOSMAS NIMLA MBANGU',  comb: 'PCB',  score: 'CBC', div: 'I.13'   },
-        { sn: 4,  name: 'JOHNSON REVOCATUS LUCAS',     comb: 'PCM',  score: 'CBA', div: 'I.14'   },
-        { sn: 5,  name: 'COLMAN EMILIAN MASAWE',       comb: 'PCM',  score: 'CAC', div: 'I.10'   },
-        { sn: 6,  name: 'EDEN SERAPHINA SANDY',        comb: 'HG E', score: 'CC',  div: 'III.22' },
-        { sn: 7,  name: 'JOHNSON DAMIAN MOLLEL',       comb: 'EGM',  score: 'BC',  div: 'I.11'   },
-        { sn: 8,  name: 'MARTIN GASPER TARIMO',        comb: 'EGM',  score: 'BD',  div: 'I.15'   },
-        { sn: 9,  name: 'JOHNSON EBENEZA NYAMA',       comb: 'EGM',  score: 'AC',  div: 'I.12'   },
-        { sn: 10, name: 'BENARD JASTIN KRASIAN',       comb: 'EGM',  score: 'BB',  div: 'I.17'   },
-        { sn: 11, name: 'SELEMAN ALLY NASSORO',        comb: '—',    score: 'CCC', div: 'III.25' },
-        { sn: 12, name: 'CLAUD SEMU MWAKOSYA',         comb: 'HG E', score: 'CB',  div: 'II.20'  },
-        { sn: 13, name: 'FAITH KANANKIRA SIFAEL',      comb: 'HG E', score: 'CC',  div: 'III.22' },
-    ]},
-    { region: 'GEITA', students: [
-        { sn: 1, name: 'REUBEN MATHIUS STEPHANO', comb: 'EGM', score: 'AA',  div: 'I.13' },
-        { sn: 2, name: 'JACOB DANIEL MASESA',      comb: 'PCB', score: 'CBC', div: 'I.10' },
-    ]},
-    { region: 'MWANZA', students: [
-        { sn: 1, name: 'KENNEDY JEREMIAH CHIKWILYA', comb: 'PCM', score: 'CBC', div: 'I.13'   },
-        { sn: 2, name: 'EGBERT EMMANUEL GREGORY',    comb: 'PCB', score: 'CBC', div: 'I.14'   },
-        { sn: 3, name: 'SELEMAN BAHATI BULUBA',       comb: 'HKL', score: 'CCC', div: 'III.25' },
-    ]},
-    { region: 'KAGERA', students: [
-        { sn: 1, name: 'LABORIOUS LEOPHENSION LWANGOGA', comb: 'PCM', score: 'BBA', div: 'I.11' },
-    ]},
-    { region: 'KIGOMA', students: [
-        { sn: 1, name: 'LINUS AMON',    comb: 'PCB', score: 'CBB', div: 'I.9'  },
-        { sn: 2, name: 'RAFIKI JEREMIA', comb: 'PCB', score: 'CBB', div: 'I.13' },
-    ]},
-    { region: 'NJOMBE', students: [
-        { sn: 1, name: 'DISMARK ELIA MNGÓNGÓ', comb: 'HGL', score: 'CCC', div: 'I.21' },
-    ]},
-    { region: 'DODOMA', students: [
-        { sn: 1, name: 'JOEL INNOCENT MTALO', comb: 'PCM', score: 'ABA', div: 'I.11' },
-    ]},
-    { region: 'SIMIYU', students: [
-        { sn: 1, name: 'DEOGRATIAS GODFREY MATANGA', comb: 'HKL', score: 'BCC', div: 'III.24' },
-    ]},
-    { region: 'MOROGORO', students: [
-        { sn: 1, name: 'IBRAHIM OMARY OMARY',    comb: 'HE',  score: 'CC',  div: 'I.17' },
-        { sn: 2, name: 'JOHAKIMU NEMES THOMAS',  comb: 'PCB', score: 'BBC', div: 'I.13' },
-    ]},
-    { region: 'MTWARA', students: [
-        { sn: 1, name: 'MALICK AZIZ MANZI',  comb: 'HG E', score: 'CC',  div: 'II.20' },
-        { sn: 2, name: 'ADAM SAIDI ADINANI', comb: 'HKL',  score: 'BBC', div: 'I.16'  },
-    ]},
-    { region: 'MARA', students: [
-        { sn: 1, name: 'IDD MATIKU JUMA', comb: 'HKL', score: 'DCC', div: 'III.23' },
-    ]},
-    { region: 'TANGA', students: [
-        { sn: 1, name: 'EHUDI ZAKARIA MAUZA',       comb: 'PCM', score: 'BBA', div: 'I.10' },
-        { sn: 2, name: 'CHRISTOPHER EMMANUEL MHINA', comb: 'PCB', score: 'CBA', div: 'I.8'  },
-    ]},
-    { region: 'TABORA', students: [
-        { sn: 1, name: 'PRINCE SWITBERT KALIK',   comb: 'EGM', score: 'CC',  div: 'I.16' },
-        { sn: 2, name: 'MKUTANO MUSALIKA MTANI',  comb: 'PCB', score: 'CAB', div: 'I.8'  },
-    ]},
-    { region: 'SHINYANGA', students: [
-        { sn: 1, name: 'MAJALIWA CHARLES STEPHANO', comb: 'HG E', score: 'CC', div: 'III.22' },
-    ]},
-    { region: 'SINGIDA', students: [
-        { sn: 1, name: 'ISMAIL ATHUMAN SHABANI', comb: 'HG E', score: 'CB',  div: 'II.19' },
-        { sn: 2, name: 'DAVID MUSSA JAPHET',      comb: 'PCB',  score: 'CCB', div: 'I.13'  },
-    ]},
-    { region: 'MBEYA', students: [
-        { sn: 1, name: 'ABDUL SHAIBU MPONDA', comb: 'PCB', score: '—', div: 'I.16' },
-    ]},
-    { region: 'MANYARA', students: [
-        { sn: 1, name: 'ANTONI PETER AMANI',   comb: 'HG E', score: 'CB',  div: 'II.19' },
-        { sn: 2, name: 'DAVID GAUDENSI NGASSA', comb: 'PCM',  score: 'BAA', div: 'I.7'   },
-    ]},
-    { region: 'KILIMANJARO', students: [
-        { sn: 1, name: 'JOSHUA LEONARD HANDRA', comb: 'PCB', score: 'BAB', div: 'I.11' },
-        { sn: 2, name: 'JAPHET JUMANNE KARIA',   comb: 'PCM', score: 'AAA', div: 'I.7'  },
-        { sn: 3, name: 'ANTON MOSSES ANTONY',    comb: 'EGM', score: 'AA',  div: 'I.7'  },
-    ]},
-    { region: 'DAR ES SALAAM', students: [
-        { sn: 1, name: 'STEPHEN STEPHEN LIKOMA', comb: 'PCM', score: 'ABA', div: 'I.7'  },
-        { sn: 2, name: 'DERRICK ETHAR MWELI',     comb: 'HGL', score: 'AAA', div: 'I.10' },
-        { sn: 3, name: 'JOHN PATRICK MHEPELA',   comb: 'EGM', score: 'CC',  div: 'I.17' },
-    ]},
-];
-
-function PracticalResults() {
-    const [tab, setTab] = useState('girls');
-    const [search, setSearch] = useState('');
-    const [applicants, setApplicants] = useState([]);
-
-    useEffect(() => {
-        fetch('/results-2026/manifest.json')
-            .then(response => response.json())
-            .then(data => setApplicants(data.applicants || []))
-            .catch(() => setApplicants([]));
-    }, []);
-
-    const groupApplicants = gender => {
-        const groups = new Map();
-        applicants
-            .filter(applicant => applicant.gender.toLowerCase() === gender)
-            .forEach(applicant => {
-                if (!groups.has(applicant.region)) groups.set(applicant.region, []);
-                groups.get(applicant.region).push(applicant);
-            });
-        return Array.from(groups, ([region, students]) => ({ region, students }));
-    };
-
-    const girlsResults = groupApplicants('girls');
-    const boysResults = groupApplicants('boys');
-    const data = tab === 'girls' ? girlsResults : boysResults;
-    const girlsCount = girlsResults.reduce((sum, region) => sum + region.students.length, 0);
-    const boysCount = boysResults.reduce((sum, region) => sum + region.students.length, 0);
-    const q = search.trim().toLowerCase();
-
-    const filtered = data
-        .map(r => ({ ...r, students: q ? r.students.filter(s => s.name.toLowerCase().includes(q)) : r.students }))
-        .filter(r => r.students.length > 0);
-
-    const accentColor = tab === 'girls' ? '#b8963c' : '#1a4a9e';
-    const tabBase = { padding: '10px 24px', borderRadius: 999, fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', transition: 'all 0.2s' };
-
-    return (
-        <section id="results" style={{ padding: '112px 0 80px', background: '#f8faff' }}>
-            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
-
-                {/* Header */}
-                <div className="reveal" style={{ textAlign: 'center', marginBottom: 48 }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#dcfce7', color: '#166534', fontSize: 11, fontWeight: 700, padding: '8px 16px', borderRadius: 999, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 20 }}>
-                        Practical Interview Results — 2026
-                    </div>
-                    <h2 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#0d2b6e', lineHeight: 1.2, marginBottom: 16 }}>
-                        Final Admission <span style={{ color: '#1a4a9e' }}>Results</span>
-                    </h2>
-                    <p style={{ color: '#4b5563', fontSize: 17, lineHeight: 1.7, maxWidth: 680, margin: '0 auto' }}>
-                        Search your name, view your letter in the browser, or download a copy. Please confirm that you are coming to attend the school by emailing <strong>headmaster@cornerstoneschooltanzania.ac.tz</strong>.
-                    </p>
-                </div>
-
-                {/* Notice */}
-                <div className="reveal" style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 16, padding: '16px 24px', marginBottom: 40, display: 'flex', alignItems: 'flex-start', gap: 14, maxWidth: 820, margin: '0 auto 40px' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#92400e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <div style={{ color: '#166534', fontSize: 14, lineHeight: 1.7, margin: 0 }}>
-                        <p style={{ margin: '0 0 10px' }}>
-                            <strong>Important:</strong> Please confirm your coming to attend the school, or confirm joining via email: <strong>headmaster@cornerstoneschooltanzania.ac.tz</strong>.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Tab switcher */}
-                <div className="reveal" style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 32, flexWrap: 'wrap' }}>
-                    <button onClick={() => { setTab('girls'); setSearch(''); }}
-                        style={{ ...tabBase, background: tab === 'girls' ? 'linear-gradient(135deg, #d4b87a, #e8d5a8)' : '#fff', color: tab === 'girls' ? '#0d2b6e' : '#6b7280', boxShadow: tab === 'girls' ? '0 4px 20px rgba(212,184,122,0.4)' : '0 2px 8px rgba(0,0,0,0.08)' }}>
-                        Girls ({girlsCount || '...'})
-                    </button>
-                    <button onClick={() => { setTab('boys'); setSearch(''); }}
-                        style={{ ...tabBase, background: tab === 'boys' ? 'linear-gradient(135deg, #1a4a9e, #0d2b6e)' : '#fff', color: tab === 'boys' ? '#fff' : '#6b7280', boxShadow: tab === 'boys' ? '0 4px 20px rgba(26,74,158,0.4)' : '0 2px 8px rgba(0,0,0,0.08)' }}>
-                        Boys ({boysCount || '...'})
-                    </button>
-                </div>
-
-                {/* Search bar */}
-                <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginBottom: 36 }}>
-                    <div style={{ position: 'relative', width: '100%', maxWidth: 420 }}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
-                            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                        </svg>
-                        <input
-                            type="text"
-                            placeholder="Search by name…"
-                            value={search}
-                            onChange={e => setSearch(e.target.value)}
-                            style={{ width: '100%', boxSizing: 'border-box', paddingLeft: 44, paddingRight: search ? 40 : 16, paddingTop: 12, paddingBottom: 12, borderRadius: 999, border: '1.5px solid #e5e7eb', outline: 'none', fontSize: 15, color: '#1f2937', background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
-                            onFocus={e => e.target.style.borderColor = accentColor}
-                            onBlur={e => e.target.style.borderColor = '#e5e7eb'}
-                        />
-                        {search && (
-                            <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', fontSize: 18, lineHeight: 1, padding: 2 }}>×</button>
-                        )}
-                    </div>
-                </div>
-
-                {/* Results */}
-                {filtered.length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '48px 24px', background: '#fff', borderRadius: 20, boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                        <div style={{ fontSize: 40, marginBottom: 16 }}>🔍</div>
-                        <p style={{ color: '#374151', fontWeight: 600, fontSize: 16, marginBottom: 8 }}>No candidates found</p>
-                        <p style={{ color: '#9ca3af', fontSize: 14 }}>No match for "{search}".</p>
-                        <button onClick={() => setSearch('')}
-                            style={{ marginTop: 20, background: accentColor, color: '#fff', fontWeight: 700, padding: '10px 24px', borderRadius: 999, border: 'none', cursor: 'pointer', fontSize: 14 }}>
-                            Show all candidates
-                        </button>
-                    </div>
-                ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                        {filtered.map(region => (
-                            <div key={region.region} style={{ background: '#fff', borderRadius: 20, overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                                {/* Region header */}
-                                <div style={{ background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#e8d5a8', flexShrink: 0 }} />
-                                        <span style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, color: '#fff', fontSize: 15, letterSpacing: '0.04em' }}>
-                                            {region.region} REGION
-                                        </span>
-                                    </div>
-                                    <span style={{ background: 'rgba(232,213,168,0.25)', color: '#e8d5a8', fontSize: 12, fontWeight: 700, padding: '4px 12px', borderRadius: 999, whiteSpace: 'nowrap' }}>
-                                        {region.students.length} {region.students.length === 1 ? 'candidate' : 'candidates'}
-                                    </span>
-                                </div>
-
-                                {/* Name list */}
-                                <div>
-                                    {region.students.map((s, idx) => (
-                                        <div key={s.sn}
-                                            style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 20px', borderBottom: idx < region.students.length - 1 ? '1px solid #f1f5f9' : 'none', transition: 'background 0.15s' }}
-                                            onMouseEnter={e => e.currentTarget.style.background = '#f8faff'}
-                                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                                            <span style={{ fontSize: 13, color: '#9ca3af', fontWeight: 600, minWidth: 28 }}>{idx + 1}.</span>
-                                            <span style={{ fontSize: 15, fontWeight: 600, color: '#0d2b6e', flex: 1 }}>{s.name}</span>
-                                            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                                                <a href={`/results-2026/letters/${s.filename}`} target="_blank" rel="noopener" style={{ background: '#0d2b6e', color: '#fff', fontSize: 12, fontWeight: 800, padding: '7px 11px', borderRadius: 6, textDecoration: 'none' }}>View</a>
-                                                <a href={`/results-2026/letters/${s.filename}`} download style={{ background: '#eef4ff', color: '#0d2b6e', fontSize: 12, fontWeight: 800, padding: '7px 11px', borderRadius: 6, textDecoration: 'none' }}>Download</a>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-                {/* Footer note */}
-                <div className="reveal" style={{ marginTop: 48, textAlign: 'center' }}>
-                    <p style={{ color: '#9ca3af', fontSize: 13 }}>
-                        For questions, contact: <strong style={{ color: '#0d2b6e' }}>0743 720 672</strong> &nbsp;|&nbsp; <strong style={{ color: '#0d2b6e' }}>0620 301 954</strong>
-                    </p>
-                </div>
-            </div>
-        </section>
-    );
-}
-
 /* ─── Alumni ─── */
 function Alumni() {
     return (
@@ -941,11 +515,10 @@ function Alumni() {
                         </p>
                         <p style={{ color: '#6b7280', lineHeight: 1.7 }}>Alumni are active in medicine, law, engineering, education, government, entrepreneurship, and social enterprise across Tanzania and the world.</p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                            {[['🩺', 'Healthcare & Medicine'], ['⚖️', 'Law & Policy'], ['🏗️', 'Engineering'], ['📊', 'Business & Finance']].map(([icon, field]) => (
+                            {[['Healthcare & Medicine'], ['Law & Policy'], ['Engineering'], ['Business & Finance']].map(([field]) => (
                                 <div key={field} style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#fff', borderRadius: 12, padding: 16, boxShadow: '0 2px 8px rgba(0,0,0,0.05)', transition: 'box-shadow 0.2s' }}
                                     onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 25px rgba(13,43,110,0.12)'}
                                     onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)'}>
-                                    <span style={{ fontSize: 24 }}>{icon}</span>
                                     <span style={{ color: '#374151', fontSize: 14, fontWeight: 500 }}>{field}</span>
                                 </div>
                             ))}
@@ -956,7 +529,6 @@ function Alumni() {
                     </div>
                     <div className="reveal">
                         <div style={{ background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', borderRadius: 24, padding: 32, color: '#fff', position: 'relative', overflow: 'hidden' }}>
-                            <div style={{ position: 'absolute', top: 0, right: 0, width: 192, height: 192, background: 'rgba(232,213,168,0.08)', borderRadius: '50%', transform: 'translate(50%,-50%)', filter: 'blur(40px)' }} />
                             <h3 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 22, marginBottom: 24 }}>CDA Network Countries</h3>
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                                 {[
@@ -968,7 +540,7 @@ function Alumni() {
                                     ['🇸🇸', 'South Sudan', 'Leadership Academy', false],
                                     ['🇨🇩', 'Congo DRC', 'Leadership Academy', false],
                                 ].map(([flag, country, role, highlight]) => (
-                                    <div key={country} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(255,255,255,0.08)', borderRadius: 12, padding: 12, border: highlight ? '1px solid rgba(232,213,168,0.4)' : '1px solid transparent', transition: 'background 0.2s' }}
+                                    <div key={country} style={{ gridColumn: highlight ? '1 / -1' : 'auto', display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(255,255,255,0.08)', borderRadius: 12, padding: 12, border: highlight ? '1px solid rgba(232,213,168,0.4)' : '1px solid transparent', transition: 'background 0.2s' }}
                                         onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.14)'}
                                         onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}>
                                         <span style={{ fontSize: 20 }}>{flag}</span>
@@ -1018,7 +590,6 @@ function Contact() {
 
     return (
         <section id="contact" style={{ padding: '112px 0', background: '#fff', position: 'relative', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', bottom: 0, left: 0, width: 384, height: 384, background: '#eef2ff', borderRadius: '50%', transform: 'translate(-50%, 50%)', filter: 'blur(60px)' }} />
             <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 64 }}>
                     <div className="reveal">
@@ -1029,13 +600,12 @@ function Contact() {
                         <p style={{ color: '#6b7280', fontSize: 18, lineHeight: 1.7, marginBottom: 40 }}>Whether you're a prospective scholar, parent, partner, or donor — we'd love to hear from you.</p>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
                             {[
-                                ['📍', 'Location', 'Foothills of Mount Meru, Arusha, Tanzania'],
-                                ['✉️', 'Email', 'headmaster@cornerstoneschooltanzania.ac.tz'],
-                                ['📞', 'Phone', '+255 754 423 290'],
-                                ['🏫', 'Network', 'Cornerstone Development Africa (CDA)'],
-                            ].map(([icon, label, value]) => (
-                                <div key={label} style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-                                    <div style={{ width: 48, height: 48, background: '#eef2ff', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>{icon}</div>
+                                ['Location', 'Foothills of Mount Meru, Arusha, Tanzania'],
+                                ['Email', 'headmaster@cornerstoneschooltanzania.ac.tz'],
+                                ['Phone', '+255 754 423 290'],
+                                ['Network', 'Cornerstone Development Africa (CDA)'],
+                            ].map(([label, value]) => (
+                                <div key={label} style={{ borderLeft: '3px solid #c9a84c', paddingLeft: 16 }}>
                                     <div>
                                         <div style={{ fontSize: 11, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{label}</div>
                                         <div style={{ color: '#374151', fontWeight: 500 }}>{value}</div>
@@ -1047,7 +617,6 @@ function Contact() {
                     <div className="reveal">
                         {status === 'success' ? (
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '48px 24px', background: '#f0fdf4', borderRadius: 24, border: '1.5px solid #86efac' }}>
-                                <div style={{ width: 72, height: 72, background: '#dcfce7', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36, marginBottom: 20 }}>✅</div>
                                 <h3 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 700, fontSize: 24, color: '#0d2b6e', marginBottom: 10 }}>Message Sent!</h3>
                                 <p style={{ color: '#4b5563', lineHeight: 1.7, marginBottom: 6 }}>Thank you for reaching out, <strong>{form.name}</strong>.</p>
                                 <p style={{ color: '#6b7280', fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>
@@ -1100,95 +669,6 @@ function Contact() {
     );
 }
 
-/* ─── Final Admission Results 2026 ─── */
-function FinalAdmissionResults() {
-    const [applicants, setApplicants] = useState([]);
-    const [summary, setSummary] = useState({ total: 0, passed: 0, rejected: 0 });
-    const [search, setSearch] = useState('');
-
-    useEffect(() => {
-        fetch('/results-2026/manifest.json')
-            .then(response => response.json())
-            .then(data => {
-                setApplicants(data.applicants || []);
-                setSummary({
-                    total: data.total || 0,
-                    passed: data.passed || 0,
-                    rejected: data.rejected || 0,
-                });
-            })
-            .catch(() => {
-                setApplicants([]);
-                setSummary({ total: 0, passed: 0, rejected: 0 });
-            });
-    }, []);
-
-    const q = search.trim().toLowerCase();
-    const filtered = applicants.filter(applicant => {
-        return !q || applicant.name.toLowerCase().includes(q);
-    });
-
-    return (
-        <main style={{ background: '#f8faff', minHeight: '100vh', paddingTop: 96 }}>
-            <section style={{ background: 'linear-gradient(135deg, #0d2b6e, #1a4a9e)', color: '#fff', padding: '72px 0 56px' }}>
-                <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(232,213,168,0.16)', color: '#e8d5a8', fontSize: 11, fontWeight: 700, padding: '8px 16px', borderRadius: 999, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 22 }}>
-                        Practical Interview Results — 2026
-                    </div>
-                    <h1 style={{ fontFamily: 'Playfair Display, serif', fontWeight: 900, fontSize: 'clamp(2.4rem, 5vw, 4.2rem)', lineHeight: 1.08, margin: '0 0 18px' }}>
-                        Admission Letters
-                    </h1>
-                    <p style={{ color: 'rgba(255,255,255,0.76)', fontSize: 17, lineHeight: 1.7, maxWidth: 760 }}>
-                        Search your name, view your letter in the browser, or download a copy.
-                    </p>
-                </div>
-            </section>
-
-            <section style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 24px 80px' }}>
-                <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 8, padding: 18, marginBottom: 20, color: '#166534', lineHeight: 1.7 }}>
-                    <strong>Please confirm your coming to attend the school</strong>, or confirm joining via email: <strong>headmaster@cornerstoneschooltanzania.ac.tz</strong>.
-                </div>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 18 }}>
-                    <input
-                        value={search}
-                        onChange={event => setSearch(event.target.value)}
-                        placeholder="Search name"
-                        aria-label="Search name"
-                        style={{ flex: 1, minWidth: 240, border: '1px solid #cfd7e6', borderRadius: 8, padding: '12px 14px', fontSize: 15, outline: 'none', background: '#fff' }}
-                    />
-                </div>
-
-                <p style={{ color: '#526079', fontSize: 14, marginBottom: 24 }}>{summary.total} names are listed. Use the action column to view the letter in your browser or download a copy.</p>
-
-                <div style={{ background: '#fff', borderRadius: 8, overflow: 'hidden', boxShadow: '0 8px 28px rgba(13,43,110,0.08)' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 210px', gap: 0, background: '#102f75', color: '#fff', fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 800 }}>
-                        <div style={{ padding: '13px 16px' }}>Name</div>
-                        <div style={{ padding: '13px 16px' }}>Action</div>
-                    </div>
-
-                    {filtered.length === 0 ? (
-                        <div style={{ padding: 34, color: '#526079', textAlign: 'center' }}>No applicants found.</div>
-                    ) : (
-                        filtered.map(applicant => {
-                            const letterUrl = `/results-2026/letters/${applicant.filename}`;
-                            return (
-                                <div key={`${applicant.gender}-${applicant.name}`} className="final-result-row" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 210px', borderBottom: '1px solid #edf1f7', alignItems: 'center' }}>
-                                    <div style={{ padding: '13px 16px', color: '#0d2b6e', fontWeight: 800 }}>{applicant.name}</div>
-                                    <div style={{ padding: '13px 16px', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                                        <a href={letterUrl} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: 34, padding: '8px 12px', borderRadius: 6, background: '#0d2b6e', color: '#fff', fontWeight: 800, textDecoration: 'none' }}>View</a>
-                                        <a href={letterUrl} download style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: 34, padding: '8px 12px', borderRadius: 6, background: '#eef4ff', color: '#0d2b6e', fontWeight: 800, textDecoration: 'none' }}>Download</a>
-                                    </div>
-                                </div>
-                            );
-                        })
-                    )}
-                </div>
-            </section>
-        </main>
-    );
-}
-
 /* ─── Footer ─── */
 function Footer() {
     return (
@@ -1227,10 +707,9 @@ function Footer() {
                 <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
                     <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>
                         © {new Date().getFullYear()} Cornerstone Leadership Academy{' '}
-                        <a href="/?view=results-2026" style={{ color: 'inherit', textDecoration: 'none', cursor: 'default' }}>Tanzania</a>.
+                        Tanzania.
                         {' '}Part of Cornerstone Development Africa.
                     </p>
-                    <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>Made with ❤️ for Tanzania's future leaders</p>
                 </div>
             </div>
         </footer>
@@ -1260,20 +739,6 @@ function MobileBottomBar() {
             borderTop: '1px solid rgba(255,255,255,0.1)',
             paddingBottom: 'env(safe-area-inset-bottom)',
         }}>
-            {/* Results CTA — full-width prominent button */}
-            <a href="#results" style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                background: 'linear-gradient(135deg, #d4b87a, #e8d5a8)',
-                color: '#0d2b6e', fontWeight: 800, fontSize: 14,
-                padding: '13px 20px', textDecoration: 'none',
-                borderBottom: '1px solid rgba(255,255,255,0.08)',
-                letterSpacing: '0.01em',
-            }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0d2b6e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                View Interview Results 2026
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0d2b6e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
-
             {/* Secondary nav icons */}
             <div style={{ display: 'flex', justifyContent: 'space-around', padding: '8px 0 6px' }}>
                 {items.map(item => (
@@ -1297,17 +762,6 @@ function MobileBottomBar() {
 /* ─── App Root ─── */
 function App() {
     useReveal();
-    const isFinalResultsPage = window.location.search.includes('view=results-2026') || window.location.pathname.startsWith('/results-2026');
-
-    if (isFinalResultsPage) {
-        return (
-            <>
-                <Navbar />
-                <FinalAdmissionResults />
-                <Footer />
-            </>
-        );
-    }
 
     return (
         <>
@@ -1318,7 +772,6 @@ function App() {
             <Programs />
             <Testimonials />
             <Admissions />
-            <PracticalResults />
             <Alumni />
             <Contact />
             <Footer />
